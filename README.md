@@ -10,4 +10,5 @@
 	 ***************************************************************
 	 */
 THIS CONTAINS MY VIM CONFIGURATION FILE.
+Has many useful keybindings
 

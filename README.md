@@ -1,8 +1,7 @@
 		/*
 	 ***************************************************************
 	 ||   Author                         {Priyanshu Shrivastav}	  || 
-	 ||   handle																	 {mr.convict}	  || 
-	 ||   github																	{convict-git}	  || 
+	 ||   handle																     mr.convict   ||
 	 ||   email  {official[dot]mr[dot]convict[at]gmail[dot]com}   || 
 	 ***************************************************************
 	**_ __ ___    _ __    ___    ___    _ __   __   __ (_)   ___  | |_ 

@@ -10,12 +10,18 @@ set noswapfile
 set tabstop=2
 set shiftwidth=2
 set smarttab
-set smartcase
 set autowrite
+set autoread
+set wildmenu
+set showcmd
+set smartcase
+set ignorecase
+set incsearch
 set encoding=utf-8
 set matchpairs=(:),{:},[:],<:>,':',":"
 set mouse=a
 syntax enable
+set statusline=%<%f%h%m%r%=char=%b=0x%B\ \ %l,%c%V\ %P
 colorscheme convict
 
 set cursorline 
@@ -233,6 +239,13 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
 		 \ endif
 "****************************************************************************
+function! My_Tab_Completion()
+    if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+        return "\<C-P>"
+    else
+        return "\<Tab>"
+endfunction
+inoremap <Tab> <C-R>=My_Tab_Completion()<CR>
 :iab sep
 \ /****************************************************************************/<CR>
 autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens ctermfg=red cterm=bold

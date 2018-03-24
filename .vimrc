@@ -22,7 +22,8 @@ set matchpairs=(:),{:},[:],<:>,':',":"
 set mouse=a
 syntax enable
 set statusline=%<%f%h%m%r%=char=%b=0x%B\ \ %l,%c%V\ %P
-colorscheme convict
+set t_Co=256
+colorscheme ron
 
 set cursorline 
 autocmd InsertEnter * highlight CursorLine ctermbg=black cterm=bold gui=reverse
@@ -184,16 +185,18 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 "nnoremap <C-c> :!g++ -std=c++11 % -Wall -Werror -g -o %.out && chmod +x %.out && ./%.out<CR>
 "Improved version
 "Compile single cpp file without any non-standart headers
-autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -Wall -g -std=c++11 -O2 % -o %:p:h/%:t:r.out && ./%:r.out < in<CR>
-autocmd filetype cpp nnoremap <C-x> :w <bar> !g++ -Wall -g -std=c++11 -O2 % -o %:p:h/%:t:r.out && ./%:r.out<CR>
+autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -Wall -g -std=c++11 -O2 % -o %:p:h/%:t:r.exe && ./%:r.exe < in<CR>
+autocmd filetype cpp nnoremap <C-x> :w <bar> !g++ -Wall -g -std=c++11 -O2 % -o %:p:h/%:t:r.exe && ./%:r.exe<CR>
 "Compilation in case when own header files are included 
 autocmd filetype cpp nnoremap <F10> :wall <bar> !g++ -Wall -g -std=c++11 -O2 %:p:h/*.cpp -o %:p:h/%:p:h:t.out && ./%:r.out<CR>
 
 "****************************************************************************
 ""Compiler_gcc(convict-git) ;)
-"nnoremap <C-c> :!gcc -std=c99 % -Wall -Werror -o %.out && chmod +x %.out && ./%.out <CR>
+autocmd filetype c nnoremap <C-c> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out< in<CR>
+autocmd filetype c nnoremap <C-x> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out<CR>
 "Improved version
-autocmd filetype c nnoremap <C-c> :w <bar> !gcc -Wall -std=c99 -O2 % -o %:p.out && ./%:p:r.out<CR>
+"autocmd filetype c nnoremap <C-c> :w <CR> <bar> !gcc -O2 % -o %:p:h/%:t:r.exe && ./%:r.exe<CR>
+"autocmd filetype c nnoremap <C-c> :w <bar> !gcc -Wall -std=c99 -O2 % -o %:p.out && ./%:p:r.out<CR>>
 
 "****************************************************************************
 "
@@ -231,6 +234,7 @@ if has("autocmd")
 endif
 
 autocmd filetype cpp nnoremap <F7> :read ~/Desktop/convict-usbPC/code/vimrc/printVec.cpp<CR>
+autocmd filetype cpp nnoremap <F8> :read ~/Desktop/convict-usbPC/code/vimrc/competitive.cpp<CR>
 "****************************************************************************
 "
 "Cursor retains the position

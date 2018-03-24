@@ -233,7 +233,7 @@ if has("autocmd")
   augroup END
 endif
 
-autocmd filetype cpp nnoremap <F7> :read ~/Desktop/convict-usbPC/code/vimrc/printVec.cpp<CR>
+autocmd filetype cpp nnoremap <F7> :read ~/Desktop/convict-usbPC/code/vimrc/functions.cpp<CR>
 autocmd filetype cpp nnoremap <F8> :read ~/Desktop/convict-usbPC/code/vimrc/competitive.cpp<CR>
 "****************************************************************************
 "

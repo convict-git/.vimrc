@@ -12,12 +12,13 @@
 #define pb push_back
 #define se second
 #define fi first
+#define e(x) cout<<x<<" "
 #define er(x, y) cout<<x<<" "<<y<<endl
 #define eR(x, y, z) cout<<x<<" "<<y<<" "<<z<<endl
 using namespace std;
 
-void pV(vector<int>*v){vit;fr(it,v->begin(),v->end())cout<<*it<<" ";cout<<endl;}
-void pS(set<int>* s){sit;fr(it,s->begin(),s->end())cout<<*it<<" ";cout<<endl;} 
+void pV(vector<int>*v){vit;fr(it,v->begin(),v->end())e(*it);e(endl);}
+void pS(set<int>* s){sit;fr(it,s->begin(),s->end())e(*it);e(endl);} 
 int gcd(int a,int b){int t,x,y;x=max(a,b);y=min(a,b);while(y!=0){t=x;x=y;y=t%y;}return x;} 
 int lcm(int a,int b){ return(a*b)/gcd(a,b);}
 int start_s=clock();

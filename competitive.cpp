@@ -32,4 +32,4 @@ int main(int argc, char *argv[]){
 	fr(i,0,n){cin >> ai;}
 	return 0;
 }
-
+/*it was hard to write, so it should be hard to read!*/

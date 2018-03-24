@@ -14,6 +14,7 @@
 #define pb push_back
 #define se second
 #define fi first
+#define ll long long
 #define e(x) cout<<x<<" "
 #define er(x, y) cout<<x<<" "<<y<<endl
 #define eR(x, y, z) cout<<x<<" "<<y<<" "<<z<<endl

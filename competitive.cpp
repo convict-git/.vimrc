@@ -7,14 +7,15 @@
     * Now, God only knows*/
 
 #include <bits/stdc++.h>
-#define fr(x,y,z) for(auto x=y;x!=z;++x)
-#define all(v) v.begin(),v.end()
-#define vit vector<int>::iterator it
-#define sit set<int>::iterator it
 #define pb push_back
 #define se second
 #define fi first
 #define ll long long
+#define fr(x,y,z) for(auto x=y;x!=z;++x)
+#define fo(n) for(ll i=0;i<n;i++)
+#define all(v) v.begin(),v.end()
+#define vit vector<int>::iterator it
+#define sit set<int>::iterator it
 #define e(x) cout<<x<<" "
 #define er(x, y) cout<<x<<" "<<y<<endl
 #define eR(x, y, z) cout<<x<<" "<<y<<" "<<z<<endl
@@ -30,9 +31,6 @@ int start_s=clock();
 void timer(){int stop_s=clock();cout<<"time taken: "<<(stop_s-start_s)/double(CLOCKS_PER_SEC)*1000<<endl;}
 
 int main(int argc, char *argv[]){
-	int n, ai;
-	cin >> n;
-	fr(i,0,n){cin >> ai;}
-	return 0;
+	//Beware no shit stuff here!
 }
 /*it was hard to write, so it should be hard to read!*/

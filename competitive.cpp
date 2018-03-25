@@ -18,6 +18,8 @@
 #define e(x) cout<<x<<" "
 #define er(x, y) cout<<x<<" "<<y<<endl
 #define eR(x, y, z) cout<<x<<" "<<y<<" "<<z<<endl
+#define y(x); {er("YES",x); return 0;}
+#define n(x); {er("NO",x); return 0;}
 using namespace std;
 
 void pV(vector<int>*v){vit;fr(it,v->begin(),v->end())e(*it);e(endl);}

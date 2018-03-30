@@ -12,15 +12,15 @@
 #define se second
 #define fi first
 #define fr(x,y,z) for(auto x=y;x!=z;++x)
-#define fo(n) for(ll i=0;i<n;i++)
+#define fo(n) for(int i=0;i<n;i++)
+#define fm(m,n) fr(i,0,m) fr(j,0,n)
 #define all(v) v.begin(),v.end()
 #define vit vector<int>::iterator it
 #define sit set<int>::iterator it
 #define e(x) cout<<x<<" "
 #define er(x, y) cout<<x<<" "<<y<<endl
 #define eR(x, y, z) cout<<x<<" "<<y<<" "<<z<<endl
-#define y(x); {er("YES",x); return 0;}
-#define n(x); {er("NO",x); return 0;}
+#define R(x,y); {er(x,y); return 0;}
 typedef long long ll;
 typedef unsigned long long ull;
 typedef unsigned int ui;

@@ -20,6 +20,7 @@ set incsearch
 set encoding=utf-8
 set matchpairs=(:),{:},[:],<:>,':',":"
 set mouse=a
+set noerrorbells
 syntax enable
 set statusline=%<%f%h%m%r%=char=%b=0x%B\ \ %l,%c%V\ %P
 set t_Co=256

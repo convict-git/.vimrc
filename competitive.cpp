@@ -36,6 +36,9 @@ int start_s=clock();
 void timer(){int stop_s=clock();er("time taken: ",(stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);}
 
 int main(int argc, char *argv[]){
+ ios_base::sync_with_stdio(false);
+ cin.tie(NULL);
+ 
 //Beware no shit stuff here!
 }
 /*it was hard to write, so it should be hard to read!*/

@@ -31,6 +31,7 @@ template <typename T> void pV(const vector<T> &v) {for(auto &it:v)e(it)<<endl;}
 template <typename T> void pS(const set<T> &s) {for(auto&it:s)e(it)<<endl;}
 template <typename T> T gcd(T &a, T &b){T t,x,y; x = max(a,b); y=min(a,b); while(y!=0){t=x; x=y; y=t%y;} return x;}
 template <typename T> T lcm(T &a,T &b){return(a*b)/gcd<T>(a,b);}
+template <typename T> T son(T n){int k=1; while(n/(T)pow(10,k) != 0) k+=1; return k;} 
 
 int start_s=clock();
 void timer(){int stop_s=clock();er("time taken: ",(stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);}

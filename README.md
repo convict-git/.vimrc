@@ -1,11 +1,3 @@
-**author** _Priyanshu Shrivastav_
-/*
- *_ __ ___  _ __ ___ ___  _ ____   ___  ___| |_ 
- | '_ ` _ \| '__/ __/ _ \| '_ \ \ / / |/ __| __|
- | | | | | | | | (_| (_) | | | \ V /| | (__| |_ 
- |_| |_| |_|_|(_)___\___/|_| |_|\_/ |_|\___|\__|
- */
-    
 # .vimrc and my cpp template for competitive programming
 ##### vim configuration file highlights!
   - Compile and run for c++, c, java, python, perl, go from editor itself by pressing **ctrl + c**
@@ -27,3 +19,4 @@ Open .vimrc and copy paste
 ```ssh
 vim ~/.vimrc
 ```
+**author** _Priyanshu Shrivastav_

@@ -4,7 +4,7 @@
  | | | | | | | | (_| (_) | | | \ V /| | (__| |_ 
  |_| |_| |_|_|(_)___\___/|_| |_|\_/ |_|\___|\__|
  When I wrote this, only God and I understood what I was doing
-    * Now, God only knows*/
+    * Now, only God knows*/
 
 #include <bits/stdc++.h>
 #define pb push_back

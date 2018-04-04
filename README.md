@@ -1,8 +1,10 @@
 **author** _Priyanshu Shrivastav_
+/*
  *_ __ ___  _ __ ___ ___  _ ____   ___  ___| |_ 
  | '_ ` _ \| '__/ __/ _ \| '_ \ \ / / |/ __| __|
  | | | | | | | | (_| (_) | | | \ V /| | (__| |_ 
  |_| |_| |_|_|(_)___\___/|_| |_|\_/ |_|\___|\__|
+ */
     
 # .vimrc and my cpp template for competitive programming
 ##### vim configuration file highlights!

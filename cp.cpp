@@ -18,7 +18,7 @@
 #define all(v) v.begin(),v.end()
 #define vit vector<int>::iterator it
 #define sit set<int>::iterator it
-#define R(x,y); {cout<<x<<"\n"; return 0;}
+#define R(x); {cout<<x<<"\n"; return 0;}
 
 typedef long long ll;
 typedef unsigned long long ull;

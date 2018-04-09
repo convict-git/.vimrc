@@ -24,7 +24,7 @@ typedef unsigned int ui;
 
 using namespace std;
 
-template <typename T> T gcd(T a, T b){T t,x,y; x = max(a,b); y=min(a,b); while(y!=0){t=x; x=y; y=t%y;} return x;}
+template <typename T> T gcd(T a, T b){if(b > a) swap(a, b); return b ? gcd <T> (b,a%b):a;}
 template <typename T> T lcm(T a,T b){return(a*b)/gcd<T>(a,b);}
 template <typename T> T son(T n){int k=1; while(n/(T)pow(10,k) != 0) k+=1; return k;} 
 

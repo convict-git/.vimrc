@@ -28,13 +28,13 @@ template <typename T> T gcd(T a, T b){if(b > a) swap(a, b); return b ? gcd <T> (
 template <typename T> T lcm(T a,T b){return(a*b)/gcd<T>(a,b);}
 template <typename T> T son(T n){int k=1; while(n/(T)pow(10,k) != 0) k+=1; return k;} 
 
+int main(int argc, char *argv[]){
+ios_base::sync_with_stdio(false);
+ cin.tie(NULL);
 #ifdef LOCAL_DEFINE
+	freopen("in", "rt", stdin);
 int start_s=clock();
 #endif
-
-int main(int argc, char *argv[]){
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
 
 #ifdef LOCAL_DEFINE
 int stop_s=clock();

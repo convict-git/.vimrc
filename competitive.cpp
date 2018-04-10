@@ -31,12 +31,12 @@ template <typename T> T son(T n){int k=1; while(n/(T)pow(10,k) != 0) k+=1; retur
 int main(int argc, char *argv[]){
 ios_base::sync_with_stdio(false);
  cin.tie(NULL);
-#ifdef LOCAL_DEFINE
+#ifdef CONVICTION
 	freopen("in", "rt", stdin);
 int start_s=clock();
 #endif
 
-#ifdef LOCAL_DEFINE
+#ifdef CONVICTION
 int stop_s=clock();
 cerr << "\ntime taken: " << (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000 << " s\n";
 #endif

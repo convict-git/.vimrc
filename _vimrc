@@ -50,7 +50,7 @@ autocmd filetype cpp nnoremap <F5>  :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION 
 "autocmd filetype cpp nnoremap <C-x> :w <bar> !%:r.exe<CR>
 autocmd filetype cpp nnoremap <C-x> :silent execute "!%:r.exe > out"<CR>
 "Compilation in case when own header files are included 
-autocmd filetype cpp nnoremap <F10> :wall <bar> !g++ -Wall -g -std=c++11 -O2 %:p:h/*.cpp -o %:p:h/%:p:h:t.out && ./%:r.out<CR>
+autocmd filetype cpp nnoremap <F10> :wall <bar> !g++ -Wall -g -std=c++11 -O2 %:p:h/*.cpp -o %:p:h/%:p:h:t.exe && %:r.exe<CR>
 
 "****************************************************************************
 ""Compiler_gcc(convict-git) ;)

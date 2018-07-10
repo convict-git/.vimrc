@@ -1,7 +1,8 @@
-"font Terminus Medium
-"Bash colorscheme Linux Console
-"Bash bgcolor = #090325
+"author: Priyanshu Shrivastav (mr.convict)
+"git clone https://github.com/convict-git/.vimrc/blob/master/.vimrc ~/.vimrc
+"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
+set gfn=Ubuntu\ Mono\ 12
 set rnu
 set nu
 set autoindent
@@ -21,18 +22,18 @@ set encoding=utf-8
 set matchpairs=(:),{:},[:],<:>,':',":"
 set mouse=a
 set noerrorbells
+set belloff=all
 syntax enable
 set statusline=%<%f%h%m%r%=char=%b=0x%B\ \ %l,%c%V\ %P
 set t_Co=256
-colorscheme ron
 
 set cursorline 
-autocmd InsertEnter * highlight CursorLine ctermbg=black cterm=bold gui=reverse
-autocmd InsertLeave * highlight CursorLine ctermbg=black cterm=bold 
+autocmd InsertEnter * highlight CursorLine ctermbg=White 
+autocmd InsertLeave * highlight CursorLine ctermbg=White
 
 set cursorcolumn
-autocmd InsertEnter * highlight CursorColumn ctermfg=White ctermbg=Black cterm=bold 
-autocmd InsertLeave * highlight CursorLine ctermbg=White ctermbg=Black cterm=bold 
+autocmd InsertEnter * highlight CursorColumn ctermfg=White 
+autocmd InsertLeave * highlight CursorLine ctermbg=White 
 
 "****************************************************************************
 "SWITCHING between tabs
@@ -41,89 +42,55 @@ nnoremap <C-k> :tabNext<CR>
 "****************************************************************************
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
-"""VUNDLE-VIM Plugin Manager"""
-"Git clone the vundle
-"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-"
-"PLUGIN SETTINGS
 filetype plugin indent on    " required
-"*****WARNING DO NOT CHANGE THE POSITION OF THE ABOVE LINE*****
-"It f*cks off the syntax highlighting
-"
-" set the runtime path to include Vundle and initialize
+"****************************************************************************
+"PLUGINS
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" Keep Plugin commands between vundle#begin/end.
-Plugin 'VundleVim/Vundle.vim'
-"Plugin 'tpope/vim-fugitive'
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
-"Plugin 'tpope/vim-vinegar'
 Plugin 'octol/vim-cpp-enhanced-highlight'
-"Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
-"Plugin 'Valloric/YouCompleteMe'
-"Plugin 'Igorjan94/codeforces.vim'
-"Plugin 'Shougo/neocomplete.vim'
+Plugin 'alvan/vim-closetag'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'ap/vim-css-color'
+Plugin 'jiangmiao/auto-pairs'
+call vundle#end()
 
-"Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-"****************************************************************************
-"
-"""SETTINGS FOR HIGHLIGHT
 let g:cpp_concepts_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 let g:cpp_class_decl_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_scope_highlight = 1
 
-"****************************************************************************
-"SETTING FOR SYNTASTIC
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"et g:syntastic_check_on_wq = 0
-"let g:syntastic_auto_jump = 1
-"****************************************************************************
-"
-""CALL NERDTree
 nnoremap <C-n> :NERDTreeToggle<CR>
+let g:ctrlp_map = '<C-p>'
+let g:ctrlp_cmd = 'CtrlP'
+nnoremap <space> :CtrlPBookmarkDir<CR> 
+
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+let g:closetag_filetypes = 'html,xhtml,phtml'
+let g:closetag_xhtml_filetypes = 'xhtml,jsx'
+let g:closetag_emptyTags_caseSensitive = 1
+let g:closetag_shortcut = '>'
+let g:closetag_close_shortcut = '<leader>>'
+
 
 "****************************************************************************
 "
 ""Compiler_g++(convict-git) ;)
-"nnoremap <C-c> :!g++ -std=c++11 % -Wall -Werror -g -o %.out && chmod +x %.out && ./%.out<CR>
-"Improved version
-"Compile single cpp file without any non-standart headers
-autocmd filetype cpp nnoremap <C-c> :w <bar> !clear && g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe<CR>
-autocmd filetype cpp nnoremap <C-x> :w <bar> !g++ -Wall -g -std=c++11 -O2 % -o %:p:h/%:t:r.exe && ./%:r.exe<CR>
-"Compilation in case when own header files are included 
-autocmd filetype cpp nnoremap <F10> :wall <bar> !g++ -Wall -g -std=c++11 -O2 %:p:h/*.cpp -o %:p:h/%:p:h:t.out && ./%:r.out<CR>
+autocmd filetype cpp nnoremap <C-c> :w <bar> silent execute "!g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe"<CR>
+autocmd filetype cpp nnoremap <F5>  :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe<CR>
+autocmd filetype cpp nnoremap <C-x> :silent execute "!./%:r.exe > out"<CR>
+autocmd filetype cpp nnoremap <F10> :wall <bar> !g++ -Wall -g -std=c++11 -O2 %:p:h/*.cpp -o %:p:h/%:p:h:t.exe && ./%:r.exe<CR>
 
 "****************************************************************************
 ""Compiler_gcc(convict-git) ;)
-autocmd filetype c nnoremap <C-c> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out< in<CR>
-autocmd filetype c nnoremap <C-x> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out<CR>
-"Improved version
-"autocmd filetype c nnoremap <C-c> :w <CR> <bar> !gcc -O2 % -o %:p:h/%:t:r.exe && ./%:r.exe<CR>
-"autocmd filetype c nnoremap <C-c> :w <bar> !gcc -Wall -std=c99 -O2 % -o %:p.out && ./%:p:r.out<CR>>
+autocmd filetype c nnoremap <C-c> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out<CR>
+autocmd filetype c nnoremap <C-x> :w <bar> !./%:r.out < in > out<CR>
 
 "****************************************************************************
 "
@@ -137,6 +104,9 @@ autocmd filetype go nnoremap <C-c> :w <bar> !go build % && ./%:p <CR>
 "FOR PASTING SOLUTIONS DIRECTLY
 nnoremap <F12> :%y+<CR>
 nnoremap <F9> :!gedit %<CR>
+autocmd filetype cpp nnoremap <F4> :!%:r.exe < in<CR><CR>
+autocmd filetype c nnoremap <F4> :!%:r.out < in<CR><CR>
+nnoremap <F2> :normal "+gP<CR>"
 "****************************************************************************
 ""CALL CtrlP
 let g:ctrlp_map = '<C-p>'
@@ -145,9 +115,6 @@ nnoremap <space> :CtrlPBookmarkDir<CR>
 "
 "****************************************************************************
 "SETTING FOR CF-tooL
-autocmd filetype cpp nnoremap <F2> :read ~/Desktop/convict-usbPC/code/vimrc/testcase.cpp<CR>
-autocmd filetype cpp nnoremap <F5> :w <bar> !/bin/cf-tool %<CR>
-nnoremap <F3> :!gedit ~/Desktop/convict-usbPC/code/vimrc/inp_out.txt<CR>
 nnoremap <F4> :!/bin/cf-paste<CR>
 nnoremap <F6> :!java -jar ~/Desktop/convict-usbPC/deb_setup/Hightail-v0.9.6.jar<CR>
 "
@@ -155,13 +122,14 @@ nnoremap <F6> :!java -jar ~/Desktop/convict-usbPC/deb_setup/Hightail-v0.9.6.jar<
 "
 "CPP template and other required functions
 if has("autocmd")
-  augroup templates
-    autocmd BufNewFile *.cpp 0r ~/Desktop/convict-usbPC/code/vimrc/cpptemplate.cpp 
+  augroup templates_
+    autocmd BufNewFile *.cpp 0r ~/temp.cpp
+		autocmd BufNewFile *.c 0r ~/temp.c 
+		autocmd BufNewFile *.html 0r ~/temp.html
+		autocmd BufWrite *.sql %y+
   augroup END
 endif
 
-autocmd filetype cpp nnoremap <F7> :read ~/Desktop/convict-usbPC/code/vimrc/functions.cpp<CR>
-autocmd filetype cpp nnoremap <F8> :read ~/Desktop/convict-usbPC/code/vimrc/competitive.cpp<CR>
 "****************************************************************************
 "
 "Cursor retains the position
@@ -170,6 +138,7 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
 		 \ endif
 "****************************************************************************
+"My tab completion
 function! My_Tab_Completion()
     if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
         return "\<C-P>"
@@ -177,7 +146,9 @@ function! My_Tab_Completion()
         return "\<Tab>"
 endfunction
 inoremap <Tab> <C-R>=My_Tab_Completion()<CR>
+
 :iab sep
 \ /****************************************************************************/<CR>
-autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens ctermfg=red cterm=bold
-
+"/****************************************************************************/
+"matching paren red
+autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens guifg=red ctermfg=red cterm=bold

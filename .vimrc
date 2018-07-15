@@ -2,7 +2,9 @@
 "git clone https://github.com/convict-git/.vimrc/blob/master/.vimrc ~/.vimrc
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-set gfn=Ubuntu\ Mono\ 12
+set lines=55 columns=120
+"set gfn=Ubuntu\ Mono\ 12
+set gfn=Terminus\ Medium\ 12
 set rnu
 set nu
 set autoindent
@@ -31,18 +33,10 @@ set cursorline
 autocmd InsertEnter * highlight CursorLine ctermbg=White 
 autocmd InsertLeave * highlight CursorLine ctermbg=White
 
-set cursorcolumn
-autocmd InsertEnter * highlight CursorColumn ctermfg=White 
-autocmd InsertLeave * highlight CursorLine ctermbg=White 
-
-"****************************************************************************
-"SWITCHING between tabs
-nnoremap <C-k> :tabNext<CR>
-
-"****************************************************************************
 set nocompatible              " be iMproved, required
 filetype off                  " required
 filetype plugin indent on    " required
+
 "****************************************************************************
 "PLUGINS
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -66,9 +60,8 @@ let g:cpp_class_scope_highlight = 1
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 nnoremap <C-n> :NERDTreeToggle<CR>
-let g:ctrlp_map = '<C-p>'
+let g:ctrlp_map = '<space>'
 let g:ctrlp_cmd = 'CtrlP'
-nnoremap <space> :CtrlPBookmarkDir<CR> 
 
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
@@ -78,51 +71,40 @@ let g:closetag_emptyTags_caseSensitive = 1
 let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
 
+"Man pages for cpp
+"sudo apt-get install cppman
+"autocmd FileType cpp set keywordprg=cppman
 
 "****************************************************************************
+"Compilers
 "
-""Compiler_g++(convict-git) ;)
-autocmd filetype cpp nnoremap <C-c> :w <bar> silent execute "!g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe"<CR>
-autocmd filetype cpp nnoremap <F5>  :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe<CR>
-autocmd filetype cpp nnoremap <C-x> :silent execute "!./%:r.exe > out"<CR>
-autocmd filetype cpp nnoremap <F10> :wall <bar> !g++ -Wall -g -std=c++11 -O2 %:p:h/*.cpp -o %:p:h/%:p:h:t.exe && ./%:r.exe<CR>
-
-"****************************************************************************
-""Compiler_gcc(convict-git) ;)
+autocmd filetype cpp nnoremap <C-c> :w <bar> silent execute "!g++ -std=gnu++14 -DCONVICTION % -o %:p:h/%:t:r.exe"<CR>
+autocmd filetype cpp nnoremap <C-x> :!./%:r.exe && ./%:r.exe > out<CR>
+autocmd filetype cpp nnoremap <F5>  :w <bar> !g++ -std=gnu++14 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe<CR>
 autocmd filetype c nnoremap <C-c> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out<CR>
-autocmd filetype c nnoremap <C-x> :w <bar> !./%:r.out < in > out<CR>
-
-"****************************************************************************
-"
-"Other Compilers
+autocmd filetype c nnoremap <C-x> :w <bar> !./%:r.out<CR>
 autocmd filetype java nnoremap <C-c> :w <bar> !javac % && java -enableassertions %:p <CR>
 autocmd filetype python nnoremap <C-c> :w <bar> !python % <CR>
 autocmd filetype perl nnoremap <C-c> :w <bar> !perl % <CR>
 autocmd filetype go nnoremap <C-c> :w <bar> !go build % && ./%:p <CR>
 "
 "****************************************************************************
-"FOR PASTING SOLUTIONS DIRECTLY
-nnoremap <F12> :%y+<CR>
-nnoremap <F9> :!gedit %<CR>
-autocmd filetype cpp nnoremap <F4> :!%:r.exe < in<CR><CR>
-autocmd filetype c nnoremap <F4> :!%:r.out < in<CR><CR>
+"Key bindings
+nnoremap <C-k> :tabNext<CR>
+nnoremap <C-t> :tabnew<CR>
 nnoremap <F2> :normal "+gP<CR>"
+nnoremap <F9> :!gedit %<CR>
+nnoremap <F10> :source ~/.vimrc<CR>
+nnoremap <F12> :%y+<CR>
+
 "****************************************************************************
-""CALL CtrlP
-let g:ctrlp_map = '<C-p>'
-let g:ctrlp_cmd = 'CtrlP'
-nnoremap <space> :CtrlPBookmarkDir<CR>
-"
-"****************************************************************************
-"SETTING FOR CF-tooL
-nnoremap <F4> :!/bin/cf-paste<CR>
-nnoremap <F6> :!java -jar ~/Desktop/convict-usbPC/deb_setup/Hightail-v0.9.6.jar<CR>
-"
-"****************************************************************************
-"
-"CPP template and other required functions
+"templates and other Buffer features
 if has("autocmd")
-  augroup templates_
+  augroup templates_"
+		autocmd BufEnter * colorscheme default
+		autocmd BufEnter *.cpp,*.c colorscheme far 
+		autocmd BufEnter *.js colorscheme slate
+		autocmd BufEnter *.html,*.py colorscheme jellybeans 
     autocmd BufNewFile *.cpp 0r ~/temp.cpp
 		autocmd BufNewFile *.c 0r ~/temp.c 
 		autocmd BufNewFile *.html 0r ~/temp.html
@@ -130,13 +112,14 @@ if has("autocmd")
   augroup END
 endif
 
+
 "****************************************************************************
 "
 "Cursor retains the position
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
-		 \ endif
+		 \ endif																																																		
 "****************************************************************************
 "My tab completion
 function! My_Tab_Completion()
@@ -147,8 +130,22 @@ function! My_Tab_Completion()
 endfunction
 inoremap <Tab> <C-R>=My_Tab_Completion()<CR>
 
-:iab sep
-\ /****************************************************************************/<CR>
 "/****************************************************************************/
 "matching paren red
-autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens guifg=red ctermfg=red cterm=bold
+autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens guifg=red ctermfg=red cterm=bold                   
+"/****************************************************************************/
+"Menu and Toolbar toggle
+function! ToggleGUICruft()
+  if &guioptions=='i'
+    exec('set guioptions=imTrL')
+  else
+    exec('set guioptions=i')
+  endif
+endfunction
+
+map <F11> <Esc>:call ToggleGUICruft()<cr>
+
+" by default, hide gui menus
+set guioptions=i
+
+"/****************************************************************************/

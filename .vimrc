@@ -80,11 +80,10 @@ let g:closetag_close_shortcut = '<leader>>'
 "****************************************************************************
 "Compilers
 "
-autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -DCONVICTION % -o %:p:h/%:t:r.exe<CR>
+autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe && ./%:r.exe > out<CR>
 autocmd filetype cpp nnoremap <C-x> :!./%:r.exe && ./%:r.exe > out<CR>
-autocmd filetype cpp nnoremap <F5>  :w <bar> !g++ -std=gnu++14 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:p:h/%:t:r.exe<CR>
-autocmd filetype c nnoremap <C-c> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out<CR>
-autocmd filetype c nnoremap <C-x> :w <bar> !./%:p:h/%:t:r.out<CR>
+autocmd filetype c nnoremap <C-c> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out && ./%:r.out > out<CR>
+autocmd filetype c nnoremap <C-x> :!./%:r.out && ./%:r.out > out<CR>
 autocmd filetype java nnoremap <C-c> :w <bar> !javac % && java -enableassertions %:p <CR>
 autocmd filetype python nnoremap <C-c> :w <bar> !python % <CR>
 autocmd filetype perl nnoremap <C-c> :w <bar> !perl % <CR>

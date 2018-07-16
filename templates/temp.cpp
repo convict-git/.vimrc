@@ -1,4 +1,4 @@
-	%/*author* Priyanshu Shrivastav 
+/*author* Priyanshu Shrivastav 
 *from*(IIT Palakkad)
  *_ __ ___  _ ______ ___  _ ____   ___  ___| |_ 
  | '_ ` _ \| '__/ __/ _ \| '_ \ \ / / |/ __| __|

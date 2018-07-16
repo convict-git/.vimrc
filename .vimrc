@@ -2,11 +2,12 @@
 "git clone https://github.com/convict-git/.vimrc/blob/master/.vimrc ~/.vimrc
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-set lines=55 columns=120
 "set gfn=Ubuntu\ Mono\ 12
+set lines=55 columns=120
 set gfn=Terminus\ Medium\ 12
 set rnu
 set nu
+set history=500
 set autoindent
 set smartindent
 set noswapfile
@@ -62,6 +63,7 @@ let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 nnoremap <C-n> :NERDTreeToggle<CR>
 let g:ctrlp_map = '<space>'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_show_hidden = 1
 
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
@@ -78,11 +80,11 @@ let g:closetag_close_shortcut = '<leader>>'
 "****************************************************************************
 "Compilers
 "
-autocmd filetype cpp nnoremap <C-c> :w <bar> silent execute "!g++ -std=gnu++14 -DCONVICTION % -o %:p:h/%:t:r.exe"<CR>
+autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -DCONVICTION % -o %:p:h/%:t:r.exe<CR>
 autocmd filetype cpp nnoremap <C-x> :!./%:r.exe && ./%:r.exe > out<CR>
-autocmd filetype cpp nnoremap <F5>  :w <bar> !g++ -std=gnu++14 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe<CR>
+autocmd filetype cpp nnoremap <F5>  :w <bar> !g++ -std=gnu++14 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:p:h/%:t:r.exe<CR>
 autocmd filetype c nnoremap <C-c> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out<CR>
-autocmd filetype c nnoremap <C-x> :w <bar> !./%:r.out<CR>
+autocmd filetype c nnoremap <C-x> :w <bar> !./%:p:h/%:t:r.out<CR>
 autocmd filetype java nnoremap <C-c> :w <bar> !javac % && java -enableassertions %:p <CR>
 autocmd filetype python nnoremap <C-c> :w <bar> !python % <CR>
 autocmd filetype perl nnoremap <C-c> :w <bar> !perl % <CR>
@@ -101,10 +103,11 @@ nnoremap <F12> :%y+<CR>
 "templates and other Buffer features
 if has("autocmd")
   augroup templates_"
-		autocmd BufEnter * colorscheme default
+		autocmd BufEnter * colorscheme jellybeans 
 		autocmd BufEnter *.cpp,*.c colorscheme far 
-		autocmd BufEnter *.js colorscheme slate
+		autocmd BufEnter *.js,*.php colorscheme slate
 		autocmd BufEnter *.html,*.py colorscheme jellybeans 
+		autocmd BufEnter *.sql colorscheme peachpuff
     autocmd BufNewFile *.cpp 0r ~/temp.cpp
 		autocmd BufNewFile *.c 0r ~/temp.c 
 		autocmd BufNewFile *.html 0r ~/temp.html

@@ -35,7 +35,7 @@
 
 ### Installation
 ```ssh
-https://github.com/convict-git/vim_conf.git ~/vim_conf
+https://github.com/convict-git/.vimrc.git ~/vim_conf
 cd ~/vim_conf
 chmod 777 install.sh
 ./install.sh

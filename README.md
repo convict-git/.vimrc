@@ -1,3 +1,5 @@
+# NOTE: The README is not updated.
+
 # .vimrc and my cpp template for competitive programming
 ##### vim configuration file highlights!
   - Compile and run for c++, c, java, python, perl, go from editor itself by pressing **ctrl + c**

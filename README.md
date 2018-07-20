@@ -45,5 +45,15 @@ Open gvim and in normal mode type and hit enter
 
 **:PluginInstall**
 
+### Screenshots
+![cp](https://user-images.githubusercontent.com/34399448/43029496-6905210a-8ca4-11e8-9077-fe789462ab28.png)
+![screenshot from 2018-07-21 04-58-38](https://user-images.githubusercontent.com/34399448/43029497-696967fa-8ca4-11e8-9ae7-64b74335b912.png)
+![screenshot from 2018-07-21 05-14-11](https://user-images.githubusercontent.com/34399448/43029565-0a1c833a-8ca5-11e8-88cc-8b853583f1be.png)
+![screenshot from 2018-07-21 04-59-54](https://user-images.githubusercontent.com/34399448/43029498-69c6fc4e-8ca4-11e8-9746-c18f2fac8536.png)
+![screenshot from 2018-07-21 05-04-18](https://user-images.githubusercontent.com/34399448/43029499-6a23e5d0-8ca4-11e8-8447-0f53db827eed.png)
+![screenshot from 2018-07-21 05-05-06](https://user-images.githubusercontent.com/34399448/43029500-6a869dba-8ca4-11e8-96e5-24e8326d060c.png)
+![screenshot from 2018-07-21 05-05-52](https://user-images.githubusercontent.com/34399448/43029501-6aef8744-8ca4-11e8-8eed-62ad951ed48d.png)
+
+
 **author** _Priyanshu Shrivastav_
 

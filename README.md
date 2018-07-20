@@ -14,6 +14,7 @@
 - Nerdtree plugin for file tree
 - Enhanced highlighting for C/C++
 - Highlighting colors for css files
+- Removes trailing whitespaces
 
 ### Key-bindings
 - **space** for opening ctrl-p file explorer

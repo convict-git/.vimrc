@@ -30,8 +30,8 @@ syntax enable
 set statusline=%<%f%h%m%r%=char=%b=0x%B\ \ %l,%c%V\ %P
 set t_Co=256
 
-set cursorline 
-autocmd InsertEnter * highlight CursorLine ctermbg=White 
+set cursorline
+autocmd InsertEnter * highlight CursorLine ctermbg=White
 autocmd InsertLeave * highlight CursorLine ctermbg=White
 
 set nocompatible              " be iMproved, required
@@ -50,6 +50,7 @@ Plugin 'alvan/vim-closetag'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'ap/vim-css-color'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'severin-lemaignan/vim-minimap'
 call vundle#end()
 
 let g:cpp_concepts_highlight = 1
@@ -64,6 +65,7 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 let g:ctrlp_map = '<space>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_show_hidden = 1
+let g:ctrlp_custom_ignore = '.viminfo\|*.exel\|*.out'
 
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
@@ -94,6 +96,7 @@ autocmd filetype go nnoremap <C-c> :w <bar> !go build % && ./%:p <CR>
 nnoremap <C-k> :tabNext<CR>
 nnoremap <C-t> :tabnew<CR>
 nnoremap <F2> :normal "+gP<CR>"
+nnoremap <F8> :set lines=37 columns=81<CR>
 nnoremap <F9> :!gedit %<CR>
 nnoremap <F10> :source ~/.vimrc<CR>
 nnoremap <F12> :%y+<CR>
@@ -102,18 +105,18 @@ nnoremap <F12> :%y+<CR>
 "templates and other Buffer features
 if has("autocmd")
   augroup templates_"
-		autocmd BufEnter * colorscheme peachpuff
-		autocmd BufEnter *.cpp,*.c colorscheme far 
-		autocmd BufEnter *.js,*.php colorscheme slate
-		autocmd BufEnter *.html,*.py colorscheme jellybeans 
+		autocmd BufEnter * colorscheme jellybeans
+		autocmd BufEnter *.cpp,*.c colorscheme far
+		autocmd BufEnter *.js,*.php colorscheme jellybeans
+		autocmd BufEnter *.html,*.py colorscheme jellybeans
+		autocmd BufEnter in colorscheme jellybeans
 		autocmd BufEnter *.sql,*.md colorscheme peachpuff
     autocmd BufNewFile *.cpp 0r ~/temp.cpp
-		autocmd BufNewFile *.c 0r ~/temp.c 
+		autocmd BufNewFile *.c 0r ~/temp.c
 		autocmd BufNewFile *.html 0r ~/temp.html
 		autocmd BufWrite *.sql %y+
   augroup END
 endif
-
 
 "****************************************************************************
 "
@@ -121,7 +124,7 @@ endif
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
-		 \ endif																																																		
+		 \ endif
 "****************************************************************************
 "My tab completion
 function! My_Tab_Completion()
@@ -134,7 +137,7 @@ inoremap <Tab> <C-R>=My_Tab_Completion()<CR>
 
 "/****************************************************************************/
 "matching paren red
-autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens guifg=red ctermfg=red cterm=bold                   
+autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens guifg=red ctermfg=red cterm=bold
 "/****************************************************************************/
 "Menu and Toolbar toggle
 function! ToggleGUICruft()
@@ -150,5 +153,9 @@ map <F11> <Esc>:call ToggleGUICruft()<cr>
 " by default, hide gui menus
 set guioptions=i
 
-"/****************************************************************************/
 
+"/****************************************************************************/
+"Removes trailing whitespaces
+autocmd BufWritePre * %s/\s\+$//e
+
+"/****************************************************************************/

@@ -3,36 +3,37 @@
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 "set gfn=Ubuntu\ Mono\ 12
-set lines=55 columns=120
-set gfn=Terminus\ Medium\ 12
+"set gfn=Terminus\ Medium\ 12
+set gfn=Fixed\ 11
+set lines=62 columns=110
 set rnu
 set nu
 set history=500
 set autoindent
 set smartindent
 set noswapfile
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set smarttab
 set autowrite
 set autoread
 set wildmenu
 set showcmd
 set smartcase
+set hlsearch
 set ignorecase
 set incsearch
 set encoding=utf-8
 set matchpairs=(:),{:},[:],<:>,':',":"
-set mouse=a
 set noerrorbells
+set mouse=c
 set belloff=all
 syntax enable
 set statusline=%<%f%h%m%r%=char=%b=0x%B\ \ %l,%c%V\ %P
 set t_Co=256
-
 set cursorline
-autocmd InsertEnter * highlight CursorLine ctermbg=White
-autocmd InsertLeave * highlight CursorLine ctermbg=White
+colorscheme jellybeans
+
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -50,7 +51,9 @@ Plugin 'alvan/vim-closetag'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'ap/vim-css-color'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'severin-lemaignan/vim-minimap'
+Plugin 'lambdalisue/vim-fullscreen'
+"for full screen ```sudo apt-get install wmctrl```
+
 call vundle#end()
 
 let g:cpp_concepts_highlight = 1
@@ -65,7 +68,7 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 let g:ctrlp_map = '<space>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_show_hidden = 1
-let g:ctrlp_custom_ignore = '.viminfo\|*.exel\|*.out'
+let g:ctrlp_custom_ignore = '.viminfo\|exe\|out'
 
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
@@ -75,10 +78,9 @@ let g:closetag_emptyTags_caseSensitive = 1
 let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
 
-"Man pages for cpp
+"Man pages for cpp (doesn't works so nice in gvim)
 "sudo apt-get install cppman
 "autocmd FileType cpp set keywordprg=cppman
-
 "****************************************************************************
 "Compilers
 "
@@ -86,38 +88,47 @@ autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -DCONVICTION % -o
 autocmd filetype cpp nnoremap <C-x> :!./%:r.exe && ./%:r.exe > out<CR>
 autocmd filetype c nnoremap <C-c> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out && ./%:r.out > out<CR>
 autocmd filetype c nnoremap <C-x> :!./%:r.out && ./%:r.out > out<CR>
+autocmd filetype javascript nnoremap <C-x> :! node %<CR>
+autocmd filetype html nnoremap <C-x> :!google-chrome %<CR>
 autocmd filetype java nnoremap <C-c> :w <bar> !javac % && java -enableassertions %:p <CR>
 autocmd filetype python nnoremap <C-c> :w <bar> !python % <CR>
 autocmd filetype perl nnoremap <C-c> :w <bar> !perl % <CR>
 autocmd filetype go nnoremap <C-c> :w <bar> !go build % && ./%:p <CR>
+autocmd filetype bash nnoremap <C-x> :!chmod +x % && ./%<CR>
 "
 "****************************************************************************
 "Key bindings
+"
+"space for ctrlp (file explorer)
+"<C-c> for compiling
 nnoremap <C-k> :tabNext<CR>
+"<C-l> for seeing the parameters
+"<C-n> for nerdtree (file tree)
 nnoremap <C-t> :tabnew<CR>
+"<C-x> for running
 nnoremap <F2> :normal "+gP<CR>"
+nnoremap <F3> :visual "+y<CR>"
+nnoremap <F5> :!./main.exe && ./main.exe > out <CR>
+nnoremap <F7> :cd ~/Desktop/3xc3pt10n/3xc3pt10n <CR>
 nnoremap <F8> :set lines=37 columns=81<CR>
 nnoremap <F9> :!gedit %<CR>
-nnoremap <F10> :source ~/.vimrc<CR>
+nnoremap <F10> :source ~/.vimrc<CR> "
+"<F11> for toggling toolbar and menubar
 nnoremap <F12> :%y+<CR>
 
 "****************************************************************************
 "templates and other Buffer features
 if has("autocmd")
   augroup templates_"
-		autocmd BufEnter * colorscheme jellybeans
 		autocmd BufEnter *.cpp,*.c colorscheme far
-		autocmd BufEnter *.js,*.php colorscheme jellybeans
-		autocmd BufEnter *.html,*.py colorscheme jellybeans
-		autocmd BufEnter in colorscheme jellybeans
-		autocmd BufEnter *.sql,*.md colorscheme peachpuff
+		autocmd BufEnter *.js,*.php,*.html,*.py,in colorscheme jellybeans
+		"autocmd BufEnter *.sql,*.md colorscheme peachpuff
     autocmd BufNewFile *.cpp 0r ~/temp.cpp
 		autocmd BufNewFile *.c 0r ~/temp.c
 		autocmd BufNewFile *.html 0r ~/temp.html
 		autocmd BufWrite *.sql %y+
   augroup END
 endif
-
 "****************************************************************************
 "
 "Cursor retains the position
@@ -137,7 +148,8 @@ inoremap <Tab> <C-R>=My_Tab_Completion()<CR>
 
 "/****************************************************************************/
 "matching paren red
-autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens guifg=red ctermfg=red cterm=bold
+autocmd BufRead,BufNewFile,BufEnter * syn match parens /[(){}]/ | hi parens guifg=grey ctermfg=white cterm=bold
+
 "/****************************************************************************/
 "Menu and Toolbar toggle
 function! ToggleGUICruft()
@@ -159,3 +171,21 @@ set guioptions=i
 autocmd BufWritePre * %s/\s\+$//e
 
 "/****************************************************************************/
+"To know the function parameters
+:set cmdheight=2
+nmap <C-l> :call CurrentFunc()<CR>
+" side effect: register k and mark k will be changed
+
+func! CurrentFunc()
+  exec "normal mk"
+  " c-type code have remarkable definitions from other OO code.
+  let l:extension = expand("%:e")
+  if l:extension == "c"
+    exec "normal ][%b%b"
+  else
+    exec "?private\\|public\\|protected\\|procedure\\|function\\s\\+\.*("
+  endif
+  "TODO: maybe you need to open your closed fold at first
+  exec "normal v$\"ky`k"
+  exec "echo @k"
+endfunc " CurrentFunc"

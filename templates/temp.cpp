@@ -32,12 +32,14 @@ const ui N = 1000000007;
 
 int main(int argc, char *argv[]){
 #ifdef CONVICTION
-	freopen("in", "r", stdin);
+	FILE* fp_in = freopen ("in", "r", stdin);
+	FILE* fp_err = freopen ("err", "w", stderr);
 	int start_s=clock();
+	cerr.precision (5);
 #endif
 	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.precision(10);
+	cin.tie (NULL);
+	cout.precision (10);
 	cout << fixed;
 
 	/*solution starts here...*/

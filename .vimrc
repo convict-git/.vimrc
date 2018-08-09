@@ -84,7 +84,7 @@ let g:closetag_close_shortcut = '<leader>>'
 "****************************************************************************
 "Compilers
 "
-autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe && ./%:r.exe > out<CR>
+autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe && ./%:r.exe > out<CR>
 autocmd filetype cpp nnoremap <C-x> :!./%:r.exe && ./%:r.exe > out<CR>
 autocmd filetype c nnoremap <C-c> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out && ./%:r.out > out<CR>
 autocmd filetype c nnoremap <C-x> :!./%:r.out && ./%:r.out > out<CR>
@@ -102,13 +102,15 @@ autocmd filetype bash nnoremap <C-x> :!chmod +x % && ./%<CR>
 "space for ctrlp (file explorer)
 "<C-c> for compiling
 nnoremap <C-k> :tabNext<CR>
-"<C-l> for seeing the parameters
+nnoremap <C-j> :tabnext<CR>
 "<C-n> for nerdtree (file tree)
 nnoremap <C-t> :tabnew<CR>
 "<C-x> for running
 nnoremap <F2> :normal "+gP<CR>"
-nnoremap <F3> :visual "+y<CR>"
+nnoremap <F3> :!checker<CR>
 nnoremap <F5> :!./main.exe && ./main.exe > out <CR>
+autocmd filetype c nnoremap <F6> :!valgrind --leak-check=full ./%:r.out<CR>
+autocmd filetype cpp nnoremap <F6> :!valgrind --leak-check=full ./%:r.exe<CR>
 nnoremap <F7> :cd ~/Desktop/3xc3pt10n/3xc3pt10n <CR>
 nnoremap <F8> :set lines=37 columns=81<CR>
 nnoremap <F9> :!gedit %<CR>
@@ -123,7 +125,7 @@ if has("autocmd")
 		autocmd BufEnter *.cpp,*.c colorscheme far
 		autocmd BufEnter *.js,*.php,*.html,*.py,in colorscheme jellybeans
 		"autocmd BufEnter *.sql,*.md colorscheme peachpuff
-    autocmd BufNewFile *.cpp 0r ~/temp.cpp
+		autocmd BufNewFile *.cpp 0r ~/temp.cpp
 		autocmd BufNewFile *.c 0r ~/temp.c
 		autocmd BufNewFile *.html 0r ~/temp.html
 		autocmd BufWrite *.sql %y+
@@ -171,21 +173,3 @@ set guioptions=i
 autocmd BufWritePre * %s/\s\+$//e
 
 "/****************************************************************************/
-"To know the function parameters
-:set cmdheight=2
-nmap <C-l> :call CurrentFunc()<CR>
-" side effect: register k and mark k will be changed
-
-func! CurrentFunc()
-  exec "normal mk"
-  " c-type code have remarkable definitions from other OO code.
-  let l:extension = expand("%:e")
-  if l:extension == "c"
-    exec "normal ][%b%b"
-  else
-    exec "?private\\|public\\|protected\\|procedure\\|function\\s\\+\.*("
-  endif
-  "TODO: maybe you need to open your closed fold at first
-  exec "normal v$\"ky`k"
-  exec "echo @k"
-endfunc " CurrentFunc"

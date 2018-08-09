@@ -84,7 +84,7 @@ let g:closetag_close_shortcut = '<leader>>'
 "****************************************************************************
 "Compilers
 "
-autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe && ./%:r.exe > out<CR>
+autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe && ./%:r.exe > out && cat err<CR>
 autocmd filetype cpp nnoremap <C-x> :!./%:r.exe && ./%:r.exe > out<CR>
 autocmd filetype c nnoremap <C-c> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out && ./%:r.out > out<CR>
 autocmd filetype c nnoremap <C-x> :!./%:r.out && ./%:r.out > out<CR>

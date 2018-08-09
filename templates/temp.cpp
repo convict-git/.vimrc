@@ -35,19 +35,19 @@ int main(int argc, char *argv[]){
 	FILE* fp_in = freopen ("in", "r", stdin);
 	FILE* fp_err = freopen ("err", "w", stderr);
 	int start_s=clock();
-	cerr.precision (5);
+	cerr.precision (3); cerr << fixed;
 #endif
 	ios_base::sync_with_stdio(false);
-	cin.tie (NULL);
-	cout.precision (10);
-	cout << fixed;
+	cin.tie (NULL); cout.precision (10); cout << fixed;
 
 	/*solution starts here...*/
 
 #ifdef CONVICTION
-	cerr << "\ntime taken: " << ((int)clock()-start_s)/double(CLOCKS_PER_SEC)*1000 << " s\n";
+	cerr << "\ntime taken: " <<
+		((int)clock()-start_s)/double(CLOCKS_PER_SEC)*1000 << " s\n";
 #endif
 
 //Beware no shit stuff here!
 	return 0;
 }
+

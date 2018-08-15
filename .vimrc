@@ -12,7 +12,7 @@ set history=500
 set autoindent
 set smartindent
 set noswapfile
-set tabstop=4
+set tabstop=3
 set shiftwidth=4
 set smarttab
 set autowrite
@@ -52,6 +52,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'ap/vim-css-color'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'lambdalisue/vim-fullscreen'
+Plugin 'lpenz/vimcommander'
 "for full screen ```sudo apt-get install wmctrl```
 
 call vundle#end()
@@ -84,10 +85,11 @@ let g:closetag_close_shortcut = '<leader>>'
 "****************************************************************************
 "Compilers
 "
-autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe && ./%:r.exe > out && cat err<CR>
-autocmd filetype cpp nnoremap <C-x> :!./%:r.exe && ./%:r.exe > out<CR>
-autocmd filetype c nnoremap <C-c> :w <bar> !gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out && ./%:r.out > out<CR>
-autocmd filetype c nnoremap <C-x> :!./%:r.out && ./%:r.out > out<CR>
+autocmd filetype cc nnoremap <C-c> :w <bar> !xterm -e "g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe && cat err && ./%:r.exe > in && echo Task finished; read" <CR>
+autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe<CR>
+autocmd filetype cpp nnoremap <C-x> :!xterm -e "./%:r.exe && time ./%:r.exe > out && echo Task finished; read"<CR><CR>
+autocmd filetype c nnoremap <C-c> :w <bar> !xterm -e "gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out && time ./%:r.out > out && echo Task finished; read"<CR>
+autocmd filetype c nnoremap <C-x> :!xterm -e "./%:r.out && echo && time ./%:r.out > out && echo Task finished; read"<CR>
 autocmd filetype javascript nnoremap <C-x> :! node %<CR>
 autocmd filetype html nnoremap <C-x> :!google-chrome %<CR>
 autocmd filetype java nnoremap <C-c> :w <bar> !javac % && java -enableassertions %:p <CR>
@@ -107,14 +109,15 @@ nnoremap <C-j> :tabnext<CR>
 nnoremap <C-t> :tabnew<CR>
 "<C-x> for running
 nnoremap <F2> :normal "+gP<CR>"
-nnoremap <F3> :!checker<CR>
-nnoremap <F5> :!./main.exe && ./main.exe > out <CR>
-autocmd filetype c nnoremap <F6> :!valgrind --leak-check=full ./%:r.out<CR>
-autocmd filetype cpp nnoremap <F6> :!valgrind --leak-check=full ./%:r.exe<CR>
+nnoremap <F3> :!xterm -e "checker out ex_out; read"
+autocmd filetype cpp nnoremap <F5> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe
+nnoremap <F5> :!xterm -e "./main.exe && time ./main.exe > out && echo Task completed; read"<CR><CR>
+autocmd filetype c nnoremap <F6> :!xterm -e "valgrind --leak-check=full --show-leak-kinds=all ./%:r.out; read"<CR>
+autocmd filetype cpp nnoremap <F6> :!xterm -e "valgrind --leak-check=full --show-leak-kinds=all ./%:r.exe; read"<CR>
 nnoremap <F7> :cd ~/Desktop/3xc3pt10n/3xc3pt10n <CR>
-nnoremap <F8> :set lines=37 columns=81<CR>
+nnoremap <F8> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && xterm -e "./%:r.exe && cat err && ./%:r.exe > in; read" <CR>
 nnoremap <F9> :!gedit %<CR>
-nnoremap <F10> :source ~/.vimrc<CR> "
+nnoremap <F10> :source ~/.vimrc<CR>
 "<F11> for toggling toolbar and menubar
 nnoremap <F12> :%y+<CR>
 
@@ -122,10 +125,11 @@ nnoremap <F12> :%y+<CR>
 "templates and other Buffer features
 if has("autocmd")
   augroup templates_"
-		autocmd BufEnter *.cpp,*.c colorscheme far
+		autocmd BufEnter *.cpp,*.c,*.cc colorscheme far
 		autocmd BufEnter *.js,*.php,*.html,*.py,in colorscheme jellybeans
 		"autocmd BufEnter *.sql,*.md colorscheme peachpuff
 		autocmd BufNewFile *.cpp 0r ~/temp.cpp
+		autocmd BufNewFile *.cc 0r ~/temp.cc
 		autocmd BufNewFile *.c 0r ~/temp.c
 		autocmd BufNewFile *.html 0r ~/temp.html
 		autocmd BufWrite *.sql %y+

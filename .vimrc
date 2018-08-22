@@ -32,7 +32,9 @@ syntax enable
 set statusline=%<%f%h%m%r%=char=%b=0x%B\ \ %l,%c%V\ %P
 set t_Co=256
 set cursorline
-colorscheme jellybeans
+set gcr=n-v-c:hor30-Cursor/lCursor,ve:ver35-Cursor,o:hor50-Cursor,i-ci:hor10-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait0-blinkoff150-blinkon175
+set guicursor+=a:blinkon0
+colorscheme far
 
 
 set nocompatible              " be iMproved, required
@@ -47,12 +49,12 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'vim-airline/vim-airline'
-Plugin 'alvan/vim-closetag'
+;"Plugin 'alvan/vim-closetag'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'ap/vim-css-color'
-Plugin 'jiangmiao/auto-pairs'
+"Plugin 'jiangmiao/auto-pairs'
 Plugin 'lambdalisue/vim-fullscreen'
-Plugin 'lpenz/vimcommander'
+"Plugin 'lpenz/vimcommander'
 "for full screen ```sudo apt-get install wmctrl```
 
 call vundle#end()
@@ -79,6 +81,7 @@ let g:closetag_emptyTags_caseSensitive = 1
 let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
 
+let g:YcmForceCompileAndDiagnostics = 0
 "Man pages for cpp (doesn't works so nice in gvim)
 "sudo apt-get install cppman
 "autocmd FileType cpp set keywordprg=cppman
@@ -86,7 +89,8 @@ let g:closetag_close_shortcut = '<leader>>'
 "Compilers
 "
 autocmd filetype cc nnoremap <C-c> :w <bar> !xterm -e "g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe && cat err && ./%:r.exe > in && echo Task finished; read" <CR>
-autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe<CR>
+"autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && xterm -e "./%:r.exe && time ./%:r.exe > out && echo Task finished; read"<CR>
+autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector  -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && xterm -e "./%:r.exe && time ./%:r.exe > out && echo Task finished; read"<CR>
 autocmd filetype cpp nnoremap <C-x> :!xterm -e "./%:r.exe && time ./%:r.exe > out && echo Task finished; read"<CR><CR>
 autocmd filetype c nnoremap <C-c> :w <bar> !xterm -e "gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out && time ./%:r.out > out && echo Task finished; read"<CR>
 autocmd filetype c nnoremap <C-x> :!xterm -e "./%:r.out && echo && time ./%:r.out > out && echo Task finished; read"<CR>
@@ -110,7 +114,7 @@ nnoremap <C-t> :tabnew<CR>
 "<C-x> for running
 nnoremap <F2> :normal "+gP<CR>"
 nnoremap <F3> :!xterm -e "checker out ex_out; read"
-autocmd filetype cpp nnoremap <F5> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe
+autocmd filetype cpp nnoremap <F5> :w <bar> !g++ -std=gnu++14 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector  -O2 -DCONVICTION % -o %:p:h/%:t:r.exe
 nnoremap <F5> :!xterm -e "./main.exe && time ./main.exe > out && echo Task completed; read"<CR><CR>
 autocmd filetype c nnoremap <F6> :!xterm -e "valgrind --leak-check=full --show-leak-kinds=all ./%:r.out; read"<CR>
 autocmd filetype cpp nnoremap <F6> :!xterm -e "valgrind --leak-check=full --show-leak-kinds=all ./%:r.exe; read"<CR>
@@ -120,13 +124,15 @@ nnoremap <F9> :!gedit %<CR>
 nnoremap <F10> :source ~/.vimrc<CR>
 "<F11> for toggling toolbar and menubar
 nnoremap <F12> :%y+<CR>
+nnoremap <S-CR> i<CR><Esc> " Needed for GVIm
 
 "****************************************************************************
+
 "templates and other Buffer features
 if has("autocmd")
   augroup templates_"
-		autocmd BufEnter *.cpp,*.c,*.cc colorscheme far
-		autocmd BufEnter *.js,*.php,*.html,*.py,in colorscheme jellybeans
+		"autocmd BufEnter *.cpp,*.c,*.cc colorscheme far
+		"autocmd BufEnter *.js,*.php,*.html,*.py,in colorscheme jellybeans
 		"autocmd BufEnter *.sql,*.md colorscheme peachpuff
 		autocmd BufNewFile *.cpp 0r ~/temp.cpp
 		autocmd BufNewFile *.cc 0r ~/temp.cc

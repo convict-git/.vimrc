@@ -34,7 +34,7 @@ set t_Co=256
 set cursorline
 set gcr=n-v-c:hor30-Cursor/lCursor,ve:ver35-Cursor,o:hor50-Cursor,i-ci:hor10-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait0-blinkoff150-blinkon175
 set guicursor+=a:blinkon0
-colorscheme far
+colorscheme blue
 
 
 set nocompatible              " be iMproved, required
@@ -82,6 +82,8 @@ let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
 
 let g:YcmForceCompileAndDiagnostics = 0
+let g:ycm_enable_diagnostic_signs = 0
+
 "Man pages for cpp (doesn't works so nice in gvim)
 "sudo apt-get install cppman
 "autocmd FileType cpp set keywordprg=cppman
@@ -91,7 +93,7 @@ let g:YcmForceCompileAndDiagnostics = 0
 autocmd filetype cc nnoremap <C-c> :w <bar> !xterm -e "g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe && cat err && ./%:r.exe > in && echo Task finished; read" <CR>
 "autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && xterm -e "./%:r.exe && time ./%:r.exe > out && echo Task finished; read"<CR>
 autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector  -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && xterm -e "./%:r.exe && time ./%:r.exe > out && echo Task finished; read"<CR>
-autocmd filetype cpp nnoremap <C-x> :!xterm -e "./%:r.exe && time ./%:r.exe > out && echo Task finished; read"<CR><CR>
+autocmd filetype cpp nnoremap <C-x> :cd %:p:h <bar> !xterm -e "./test.sh; read"<CR><CR>
 autocmd filetype c nnoremap <C-c> :w <bar> !xterm -e "gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out && time ./%:r.out > out && echo Task finished; read"<CR>
 autocmd filetype c nnoremap <C-x> :!xterm -e "./%:r.out && echo && time ./%:r.out > out && echo Task finished; read"<CR>
 autocmd filetype javascript nnoremap <C-x> :! node %<CR>
@@ -107,8 +109,8 @@ autocmd filetype bash nnoremap <C-x> :!chmod +x % && ./%<CR>
 "
 "space for ctrlp (file explorer)
 "<C-c> for compiling
-nnoremap <C-k> :tabNext<CR>
-nnoremap <C-j> :tabnext<CR>
+nnoremap <C-j> :tabNext<CR>
+nnoremap <C-k> :tabnext<CR>
 "<C-n> for nerdtree (file tree)
 nnoremap <C-t> :tabnew<CR>
 "<C-x> for running
@@ -118,8 +120,9 @@ autocmd filetype cpp nnoremap <F5> :w <bar> !g++ -std=gnu++14 -Wall -Wextra -ped
 nnoremap <F5> :!xterm -e "./main.exe && time ./main.exe > out && echo Task completed; read"<CR><CR>
 autocmd filetype c nnoremap <F6> :!xterm -e "valgrind --leak-check=full --show-leak-kinds=all ./%:r.out; read"<CR>
 autocmd filetype cpp nnoremap <F6> :!xterm -e "valgrind --leak-check=full --show-leak-kinds=all ./%:r.exe; read"<CR>
-nnoremap <F7> :cd ~/Desktop/3xc3pt10n/3xc3pt10n <CR>
-nnoremap <F8> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && xterm -e "./%:r.exe && cat err && ./%:r.exe > in; read" <CR>
+nnoremap <F7> :cd ~/Desktop/3xc3pt10n/3xc3pt10n <bar> Explore<CR>
+nnoremap <C-z> :cd %:p:h <bar> call Parse()<CR>
+nnoremap <C-a> :cd %:p:h <bar> call TestCase()<CR>
 nnoremap <F9> :!gedit %<CR>
 nnoremap <F10> :source ~/.vimrc<CR>
 "<F11> for toggling toolbar and menubar
@@ -134,6 +137,7 @@ if has("autocmd")
 		"autocmd BufEnter *.cpp,*.c,*.cc colorscheme far
 		"autocmd BufEnter *.js,*.php,*.html,*.py,in colorscheme jellybeans
 		"autocmd BufEnter *.sql,*.md colorscheme peachpuff
+		autocmd BufEnter * silent! lcd %:p:h
 		autocmd BufNewFile *.cpp 0r ~/temp.cpp
 		autocmd BufNewFile *.cc 0r ~/temp.cc
 		autocmd BufNewFile *.c 0r ~/temp.c
@@ -183,3 +187,28 @@ set guioptions=i
 autocmd BufWritePre * %s/\s\+$//e
 
 "/****************************************************************************/
+"
+"
+"sudo mv parse.py /usr/bin/parse
+function! Parse()
+    let new_name = input('Enter codeforces contest code: ')
+    exec '!xterm -e "parse ' . l:new_name . ';read"'
+endfunction"
+
+function! TestCase()
+	 let index = 1
+	 while !empty(glob("input".index))
+		  let index += 1
+	 endwhile
+	 echo "Input case: " . index . " "
+	 let in = input('Input case: ')
+	 echo " "
+	 let out = input('Output case: ')
+	 echo " "
+	 let confirm = input ('Are you sure of writing this test case (y/n) : ')
+	 if confirm == 'y'
+		  silent exec '!echo "' . in . '" > input' . index
+		  silent exec '!echo "' . out . '" > output' . index
+	 endif
+endfunction
+

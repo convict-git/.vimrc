@@ -221,31 +221,42 @@ def main():
     parser.add_argument('--language', '-l', default="c++14", help="The programming language you want to use "
             "(c++14, go)")
     parser.add_argument('contest', help="")
+    parser.add_argument('--p', default="all", help="")
     args = parser.parse_args()
 
     contest = args.contest
     language = args.language
+    p = args.p
+    if p == "all":
+        # Find contest and problems.
+        print ('Parsing contest %s for language %s, please wait...' % (contest, language))
+        content = parse_contest(contest)
+        print (BOLD+GREEN_F+'*** Round name: '+content.name+' ***'+NORM)
+        print ('Found %d problems!' % (len(content.problems)))
 
-    # Find contest and problems.
-    print ('Parsing contest %s for language %s, please wait...' % (contest, language))
-    content = parse_contest(contest)
-    print (BOLD+GREEN_F+'*** Round name: '+content.name+' ***'+NORM)
-    print ('Found %d problems!' % (len(content.problems)))
-
-    # Find problems and test cases.
-    TEMPLATE = language_params[language]["TEMPLATE"]
-    for index, problem in enumerate(content.problems):
-        print ('Downloading Problem %s: %s...' % (problem, content.problem_names[index]))
-        folder = '%s/%s/' % (contest, problem)
+        # Find problems and test cases.
+        TEMPLATE = language_params[language]["TEMPLATE"]
+        for index, problem in enumerate(content.problems):
+            print ('Downloading Problem %s: %s...' % (problem, content.problem_names[index]))
+            folder = '%s/%s/' % (contest, problem)
+            call(['mkdir', '-p', folder])
+            call(['cp', '-n', TEMPLATE, '%s/%s.%s' % (folder, problem, TEMPLATE.split('.')[1])])
+            num_tests = parse_problem(folder, contest, problem)
+            print('%d sample test(s) found.' % num_tests)
+            generate_test_script(folder, language, num_tests, problem)
+            print ('========================================')
+    else :
+        content = parse_contest(contest)
+        print (BOLD+GREEN_F+'*** Round name: '+content.name+' ***'+NORM)
+        TEMPLATE = language_params[language]["TEMPLATE"]
+        print ('Downloading Problem %s: from contest %s..' % (p, str(contest)))
+        folder = '%s/%s/' % (contest, p)
         call(['mkdir', '-p', folder])
-        call(['cp', '-n', TEMPLATE, '%s/%s.%s' % (folder, problem, TEMPLATE.split('.')[1])])
-        num_tests = parse_problem(folder, contest, problem)
+        call(['cp', '-n', TEMPLATE, '%s/%s.%s' % (folder, p, TEMPLATE.split('.')[1])])
+        num_tests = parse_problem(folder, contest, p)
         print('%d sample test(s) found.' % num_tests)
-        generate_test_script(folder, language, num_tests, problem)
+        generate_test_script(folder, language, num_tests, p)
         print ('========================================')
-
-    print ('Use ./test.sh to run sample tests in each directory.')
-
 
 if __name__ == '__main__':
     main()

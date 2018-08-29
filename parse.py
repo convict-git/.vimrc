@@ -24,7 +24,7 @@ language_params = {
         'c++14' : {
             'TEMPLATE'    : '/home/convict/temp.cpp',
             'DEBUG_FLAGS' : '-DDEBUG -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC',
-            'COMPILE_CMD' : 'g++ -g -std=gnu++14 -Wall -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align  -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector  -O2 $DBG',
+            'COMPILE_CMD' : 'g++ -g -std=gnu++14 -Wall -Wextra -pedantic -Wshadow -Wfloat-equal -Wconversion -Wshift-overflow=2 -Wduplicated-cond -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=signed-integer-overflow -fsanitize=bounds -O2 $DBG',
             'RUN_CMD'     : './a.out'
             },
         'go'    : {
@@ -227,15 +227,17 @@ def main():
     contest = args.contest
     language = args.language
     p = args.p
+
+    content = parse_contest(contest)
+    print (BOLD+GREEN_F+'*** Round name: '+content.name+' ***'+NORM)
+    TEMPLATE = language_params[language]["TEMPLATE"]
+
     if p == "all":
         # Find contest and problems.
-        print ('Parsing contest %s for language %s, please wait...' % (contest, language))
-        content = parse_contest(contest)
-        print (BOLD+GREEN_F+'*** Round name: '+content.name+' ***'+NORM)
+        #print ('Parsing contest %s for language %s, please wait...' % (contest, language))
         print ('Found %d problems!' % (len(content.problems)))
 
         # Find problems and test cases.
-        TEMPLATE = language_params[language]["TEMPLATE"]
         for index, problem in enumerate(content.problems):
             print ('Downloading Problem %s: %s...' % (problem, content.problem_names[index]))
             folder = '%s/%s/' % (contest, problem)
@@ -246,9 +248,6 @@ def main():
             generate_test_script(folder, language, num_tests, problem)
             print ('========================================')
     else :
-        content = parse_contest(contest)
-        print (BOLD+GREEN_F+'*** Round name: '+content.name+' ***'+NORM)
-        TEMPLATE = language_params[language]["TEMPLATE"]
         print ('Downloading Problem %s: from contest %s..' % (p, str(contest)))
         folder = '%s/%s/' % (contest, p)
         call(['mkdir', '-p', folder])

@@ -13,7 +13,7 @@ set autoindent
 set smartindent
 set noswapfile
 set tabstop=3
-set shiftwidth=4
+set shiftwidth=2
 set smarttab
 set autowrite
 set autoread
@@ -92,14 +92,13 @@ let g:ycm_enable_diagnostic_signs = 0
 "
 autocmd filetype cc nnoremap <C-c> :w <bar> !xterm -e "g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && ./%:r.exe && cat err && ./%:r.exe > in && echo Task finished; read" <CR>
 "autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && xterm -e "./%:r.exe && time ./%:r.exe > out && echo Task finished; read"<CR>
-autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector  -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && xterm -e "./%:r.exe && time ./%:r.exe > out && echo Task finished; read"<CR>
-autocmd filetype cpp nnoremap <C-x> :cd %:p:h <bar> !xterm -e "./test.sh; read"<CR><CR>
+autocmd filetype cpp nnoremap <C-c> :w <bar> !g++ -std=gnu++14 -Wall -Wextra -pedantic -Wshadow -Wfloat-equal -Wconversion -Wshift-overflow=2 -Wduplicated-cond -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=signed-integer-overflow -fsanitize=bounds -O2 -DCONVICTION % -o %:p:h/%:t:r.exe && xterm -e "./%:r.exe && time ./%:r.exe > out && echo Task finished; read"<CR>
 autocmd filetype c nnoremap <C-c> :w <bar> !xterm -e "gcc -lm % -o %:p:h/%:t:r.out && ./%:r.out && time ./%:r.out > out && echo Task finished; read"<CR>
 autocmd filetype c nnoremap <C-x> :!xterm -e "./%:r.out && echo && time ./%:r.out > out && echo Task finished; read"<CR>
 autocmd filetype javascript nnoremap <C-x> :! node %<CR>
 autocmd filetype html nnoremap <C-x> :!google-chrome %<CR>
 autocmd filetype java nnoremap <C-c> :w <bar> !javac % && java -enableassertions %:p <CR>
-autocmd filetype python nnoremap <C-c> :w <bar> !python % <CR>
+autocmd filetype python nnoremap <C-c> :w <bar> !xterm -e "python %; read"<CR>
 autocmd filetype perl nnoremap <C-c> :w <bar> !perl % <CR>
 autocmd filetype go nnoremap <C-c> :w <bar> !go build % && ./%:p <CR>
 autocmd filetype bash nnoremap <C-x> :!chmod +x % && ./%<CR>
@@ -120,9 +119,11 @@ autocmd filetype cpp nnoremap <F5> :w <bar> !g++ -std=gnu++14 -Wall -Wextra -ped
 nnoremap <F5> :!xterm -e "./main.exe && time ./main.exe > out && echo Task completed; read"<CR><CR>
 autocmd filetype c nnoremap <F6> :!xterm -e "valgrind --leak-check=full --show-leak-kinds=all ./%:r.out; read"<CR>
 autocmd filetype cpp nnoremap <F6> :!xterm -e "valgrind --leak-check=full --show-leak-kinds=all ./%:r.exe; read"<CR>
-nnoremap <F7> :cd ~/Desktop/3xc3pt10n/3xc3pt10n <bar> Explore<CR>
+nnoremap <C-d> :E <bar> e <bar> cd ~/Desktop/3xc3pt10n/3xc3pt10n <bar> Explore<CR>
+autocmd filetype cpp nnoremap <C-x> :cd %:p:h <bar> call RunTest()<CR>
+nnoremap <C-e> :Explore<CR>
 nnoremap <C-z> :cd %:p:h <bar> call Parse()<CR>
-nnoremap <C-a> :cd %:p:h <bar> call TestCase()<CR>
+autocmd filetype cpp nnoremap <C-a> :cd %:p:h <bar> call TestCase()<CR>
 nnoremap <F9> :!gedit %<CR>
 nnoremap <F10> :source ~/.vimrc<CR>
 "<F11> for toggling toolbar and menubar
@@ -188,11 +189,25 @@ autocmd BufWritePre * %s/\s\+$//e
 
 "/****************************************************************************/
 "
+"My functions for gvim && competitive
 "
 "sudo mv parse.py /usr/bin/parse
+"nnoremap <C-z> :cd %:p:h <bar> call Parse()<CR>
+"self check test cases
+"autocmd filetype cpp nnoremap <C-a> :cd %:p:h <bar> call TestCase()<CR>
+"autocmd filetype cpp nnoremap <C-x> :cd %:p:h <bar> !xterm -e "./test.sh; read"<CR><CR>
+"
+function! RunTest()
+	 if (!empty (glob ("test.sh")))
+		  exec '!xterm -e "./test.sh; read"'
+	 else
+		  exec '!xterm -e "runTestCases; read"'
+	 endif
+endfunction
+
 function! Parse()
-    let new_name = input('Enter codeforces contest code: ')
-    exec '!xterm -e "parse ' . l:new_name . ';read"'
+    let new_contest = input('Enter codeforces contest code (eg. 1009 --p A for problem A): ')
+    exec '!xterm -e "parse ' . l:new_contest. ';read"'
 endfunction"
 
 function! TestCase()

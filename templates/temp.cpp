@@ -1,4 +1,4 @@
-/*author* Priyanshu Shrivastav (from IIT Palakkad) *
+/* author: Priyanshu Shrivastav, from IIT Palakkad *
  * *_ __ ___  _ ______ ___  _ ____   ___  ___| |_  *
  * | '_ ` _ \| '__/ __/ _ \| '_ \ \ / / |/ __| __| *
  * | | | | | | | | (_| (_) | | | \ V /| | (__| |_  *
@@ -8,6 +8,7 @@ When I wrote this, only God and I understood what I was doing
 
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
 using namespace __gnu_pbds;
 
@@ -19,20 +20,21 @@ using namespace __gnu_pbds;
 #define all(v) (v).begin(),(v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define SQR(x) ((x)*(x))
-#define MOD(x) ((x)%N)
-#define INF (N-7)
+#define MOD(x) ((x)%_mod)
+#define INF (_mod-7)
 #define EPS ((ld)1e-9)
+#define MAXN ((int)1e5+10)
 
 typedef long double ld;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef unsigned int ui;
 
-const ui N = (ui)1e9 + 7;
+const ui _mod = (ui)1e9 + 7;
 
 int main() {
 #ifdef CONVICTION
-	 if(!freopen ("in", "r", stdin)) return -1;
+	 if(!freopen ("in", "r", stdin)) return 26;
 #endif
 	 ios_base::sync_with_stdio(false);
 	 cin.tie (NULL); cout.precision (10); cout << fixed;

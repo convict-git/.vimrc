@@ -17,6 +17,7 @@
 #define MOD(x) ((x)%N)
 #define max(x, y) ((x)>(y) ? (x):(y))
 #define min(x, y) ((x)<(y) ? (x):(y))
+#define inf 0x7fffffff
 #define endl fprintf(stdout, "\n")
 #define bug fprintf (stderr, "Here!\n")
 
@@ -30,6 +31,16 @@ void swap (int*, int*);
 int main (void) {
 	freopen ("in", "r", stdin);
 	/*Your code goes here...*/
+	int n;
+	scanf (" %i", &n);
+	int A[n];
+	for (int i = 0; i < n; ++i)
+	  scanf (" %i", A + i);
+
+	merge_sort (A, n);
+	for (int i = 0; i < n; ++i)
+	  printf ("%i ", A[i]);
+	endl;
 
 	return 0;
 }
@@ -46,22 +57,19 @@ void idebug (int arg_c, ...) {
 	fprintf (stderr, "\n");
 }
 
-void merge (int* a, int a_n, int* b, int b_n) {
-	int* temp = (int*) malloc ((a_n+b_n)*sizeof(int));
-	int *ptr1 = a, *ptr2 = b;
-	int i = 0;
-	while (ptr1 - a < a_n && ptr2 - b < b_n)
-		temp[i++] = (*ptr1 < *ptr2 ? *ptr1++ : *ptr2++);
+void merge (int* a, int a_n, int *b, int b_n) {
+  int L[a_n + 1], R[b_n + 1];
+  L[a_n] = R[b_n] = inf;
+  for (int i = 0; i < a_n; ++i)
+	 L[i] = *(a + i);
+  for (int i = 0; i < b_n; ++i)
+	 R[i] = *(b + i);
 
-	if (ptr1 - a == a_n && ptr2 - b < b_n)
-		while (ptr2 - b < b_n) temp[i++] = *ptr2++;
-	else if (ptr2 - b == b_n && ptr1 - a < a_n)
-		while (ptr1 - a < a_n) temp[i++] = *ptr1++;
-
-	for (i = 0; i < a_n; i++) a[i] = temp[i];
-	for (i = 0; i < b_n; i++) b[i] = temp [a_n + i];
-	free (temp);
-	return;
+  for (int i = 0, j = 0, k = 0 ; i < a_n + b_n; ++i)
+  {
+	 if (i < a_n) a[i] = L[j] < R[k] ? L[j++] : R[k++];
+	 else b[i - a_n] = L[j] < R[k] ? L[j++] : R[k++];
+  }
 }
 
 void merge_sort (int* A, int n) {

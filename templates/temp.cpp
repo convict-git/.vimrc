@@ -18,9 +18,9 @@ using namespace std;
 #define eb      emplace_back
 #define se      second
 #define fi      first
-#define all(v) 	(v).begin(),(v).end()
-#define sqr(x) 	((x)*(x))
-#define Mod(x) 	((x)%_mod)
+#define all(v)  (v).begin(),(v).end()
+#define sqr(x)  ((x)*(x))
+#define Mod(x)  ((x)%_mod)
 #define inf     (0x7fffffff)
 #define eps     ((double)1e-9)
 

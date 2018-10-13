@@ -3,7 +3,7 @@ echo -e "\t\e[1m\e[101m\e[5m\t\e[4mWARNING : Check for following possible bugs:\
 echo -e "\t0)\e[0m\e[32m Variable Shadowing?? \e[91mCheck for \e[1mMAXN, EPS, INF!!!\e[0m"
 echo -e "\t1)\e[0m\e[93m TEST on ATLEAST 10 hard testcases before submitting!\e[0m"
 echo -e "\t2)\e[0m\e[32m Make Tests Cases On The Fly! \e[91mNeed to try stress testing?\e[0m"
-echo -e "\t3)\e[0m\e[34m Check for corner cases, and all end points!\e[0m"
+echo -e "\t3)\e[0m\e[36m Check for corner cases, and all end points!\e[0m"
 echo -e "\t4)\e[0m\e[93m Check for \e[1minteger overflow,\e[0m product of two int!\e[0m"
 echo -e "\t5)\e[1m\e[32m int -> long long ?? \e[36mint * 1LL or %d -> %ld??\e[0m"
 echo -e "\t6)\e[0m\e[91m floating point precision?? \e[32m setprecision?? \e[1m%.9f?? \e[0m"

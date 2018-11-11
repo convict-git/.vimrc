@@ -266,7 +266,7 @@ function! My_Tab_Completion()
 	function! Submit()
 	  let @+=expand("%:p")
 	  echo expand("%:p")
-	  let submit_contest = input('Enter codeforces contest code (eg. 1009 --p A for problem A of 1009): ')
+	  let submit_contest = input('Enter codeforces contest code (eg. 1009/A for problem A of 1009): ')
 	  let confirm = input ('Are you sure of submitting this file (y/n) : ')
 	  if confirm == 'y'
 		 silent exec '!gnome-terminal --tab -- w3m https://codeforces.com/problemset/submit/' . l:submit_contest. ' '

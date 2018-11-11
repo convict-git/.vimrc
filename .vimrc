@@ -198,6 +198,7 @@ function! My_Tab_Completion()
 	return "\<C-P>"
   else
 	return "\<Tab>"
+	endif
   endfunction
   inoremap <Tab> <C-R>=My_Tab_Completion()<CR>
 

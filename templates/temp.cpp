@@ -32,7 +32,7 @@ int warnscanf_shit;
 typedef int64_t ll;
 typedef uint64_t ull;
 const int maxn = 1e5 + 10;
-const int _mod = 1e9 + 7;
+//const int _mod = 1e9 + 7;
 
 int main() {
 	 //IOS; PREC;

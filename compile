@@ -1,7 +1,7 @@
 #!/bin/bash
 #1. It compiles your cpp file and catches many bugs there itself, eg. Variable shadowing, integer overflow, float comparison et cetere
 #2. If input present in the format given in point 5 then it runs the program on it otherwise you can manually insert the input
-#3. It checks for Time limit that you pass as the 6 second argument
+#3. It checks for Time limit that you pass as the  second argument
 #4. If you have expected output in the format give in point 6, it runs a diff on your output and expected output
 #5. There should be input1, input2, ... files present to take them as input
 #6. If you have the expected output store it as output1, output2, ...

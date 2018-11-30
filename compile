@@ -5,7 +5,7 @@
 #4. If you have expected output in the format give in point 6, it runs a diff on your output and expected output
 #5. There should be input1, input2, ... files present to take them as input
 #6. If you have the expected output store it as output1, output2, ...
-#7. I'll comment the code soon for easier understanding. Till then use as mention below
+#7. I'll comment the code soon for easier understanding. Till then use as mentioned below
 #usage compile filename.cpp time(in sec)
 #example compile main.cpp 1
 

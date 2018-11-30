@@ -1,7 +1,4 @@
 #!/bin/bash
-
-#usage : compile filename.cpp time(in sec) 
-#example : compile prob1.cpp 1
 echo -e "____________welcome mr.convict______________"
 if
   g++ -std=gnu++14 -Wall -g -Wextra -Wshadow -Wfloat-equal -Wconversion -Wshift-overflow=2 -Wduplicated-cond -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=signed-integer-overflow -fsanitize=bounds -O2 -DCONVICTION $1
@@ -27,15 +24,15 @@ then
 		fi
 	 done
 	 if [ -f "output1" ]; then
-		echo -e "===================VERDICT=================="
+		echo -e "==================VERDICT==================="
 		for test_file in $INPUT_NAME*
 		do
 		  i=$((${#INPUT_NAME}))
 		  test_case=${test_file:$i}
-		  if diff --brief --ignore-trailing-space $REALOUTPUT_NAME$test_case $OUTPUT_NAME$test_case; then
-			 echo -e "\e[1m\e[32mSample test $test_case: Accepted\e[0m"
+		  if diff --brief --ignore-trailing-space $REALOUTPUT_NAME$test_case $OUTPUT_NAME$test_case >> errlg; then
+			 echo -e "\e[1m\e[32m\tSample test $test_case: Accepted\e[0m"
 		  else
-			 echo -e "\e[1m\e[31mSample test $test_case: Wrong Answer\e[0m"
+			 echo -e "\e[1m\e[31m\tSample test $test_case: Wrong Answer\e[0m"
 		  fi
 		done
 	 fi

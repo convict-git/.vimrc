@@ -1,10 +1,17 @@
 #!/bin/bash
+#1. It compiles your cpp file and catches many bugs there itself, eg. Variable shadowing, integer overflow, float comparison et cetere
+#2. If input present in the format given in point 5 then it runs the program on it otherwise you can manually insert the input
+#3. It checks for Time limit that you pass as the 6 second argument
+#4. If you have expected output in the format give in point 6, it runs a diff on your output and expected output
+#5. There should be input1, input2, ... files present to take them as input
+#6. If you have the expected output store it as output1, output2, ...
+#7. I'll comment the code soon for easier understanding. Till then use as mention below
 #usage compile filename.cpp time(in sec)
 #example compile main.cpp 1
 
 echo -e "____________welcome mr.convict______________"
 if
-  g++ -std=gnu++14 -Wall -g -Wextra -Wshadow -Wfloat-equal -Wconversion -Wshift-overflow=2 -Wduplicated-cond -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=signed-integer-overflow -fsanitize=bounds -O2 -DCONVICTION $1
+  g++ -std=gnu++14 -Wall -g -Wextra -Wshadow -Wfloat-equal -Wconversion -Wshift-overflow=2 -Wduplicated-cond -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=signed-integer-overflow -fsanitize=bounds -O2 $1
 then
   echo -e "\e[32m\e[1mCompilation Successful!\e[0m"
   INPUT_NAME=input

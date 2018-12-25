@@ -1,0 +1,33 @@
+swipe:
+  3: 
+    left: 
+      command: 'xdotool key XF86MonBrightnessDown'
+    right: 
+      command: 'xdotool key XF86MonBrightnessUp'
+    up:
+      command: 'xdotool key XF86AudioRaiseVolume'
+    down: 
+      command: 'xdotool key XF86AudioLowerVolume'
+  4:
+    left: 
+      command: 'xdotool key super+Left'
+    right: 
+      command: 'xdotool key super+Right'
+    up: 
+      command: 'xdotool key ctrl+shift+Tab'
+    down: 
+      command: 'xdotool key ctrl+Tab'
+
+pinch:
+  in:
+    command: 'xdotool key ctrl+plus'
+  out:
+    command: 'xdotool key ctrl+minus'
+
+threshold:
+  swipe: 0.2 
+  pinch: 1
+
+interval:
+  swipe: 0.2
+  pinch: 1

@@ -1,0 +1,1 @@
+checker >> err && cat err

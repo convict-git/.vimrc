@@ -1,0 +1,62 @@
+const int Mod = (int)1e9 + 7;
+
+template <class T = int> void add (T &a, const T &b, const T &m) {
+	a = ((a%m)+(b%m))%m;
+}
+
+template <class T = int> void mul (T &a, const T &b, const T &m) {
+	a = ((a%m)*(b%m))%m;
+}
+
+template <class T = int> void sub (T &a, const T &b, const T &m) {
+	a = ((a%m)-(b%m)+m)%m;
+}
+
+template <class T = int> T modExp (T a, T n, T m) {
+	T sm = 1;
+	a%=m;
+	while (n != 0) {
+		if (n&1) sm *= a, sm%=m;
+		a *= a, a%=m;
+		n >>= 1;
+	}
+	return sm;
+}
+
+template <class T = int> T gcd (T a, T b) {
+	T tmp;
+	while (b != 0) tmp = b, b = a%b, a = tmp;
+	return a;
+}
+
+template <class T = int> pair <T, T> excGcd (T a, T b) {
+	if (b == 0) return {1, 0};
+	pair <T, T> pi = excGcd <T> (b, a%b);
+	return {pi.second, pi.first - (a/b) * pi.second};
+}
+
+template <class T = int> pair <T, T> extendedEuclid (T a, T b, T c) {
+	T _gcd = gcd <T> (a, b);
+
+	if (c%_gcd == 0) {
+		T k = c/_gcd;
+		pair <T, T> pi = excGcd <T> (a, b);
+		//assert (a*k*pi.first + b*k*pi.second == c);
+		return {k*pi.first, k*pi.second};
+	}
+	else {
+		//assert (false);
+		return {0, 0};
+	}
+}
+
+template <class T = int> T modInvPrime (T a, T m) {
+	return modExp <T> (a, m - 2, m);
+}
+
+template <class T = int> T modInv (T a, T m) {
+	assert (gcd <T> (a, m) != 1);
+	pair <T, T> pi = excMain (a, m, 1);
+	return pi.first;
+}
+

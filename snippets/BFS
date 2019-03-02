@@ -1,0 +1,41 @@
+void bfs (int src, int dest = -1) {
+	vector <bool> used(V, false);
+	vector <int> dist(V, infi), Par(V, -1);
+	queue <int> Q;
+
+	used[src] = true;
+	dist[src] = 0;
+
+	Q.push(src);
+	while (!Q.empty()) {
+		int u = Q.front();
+		Q.pop();
+		if (dest != -1 && u == dest) break;
+		for (auto v : Adj[u]) {
+			if (!used[v]) {
+				used[v] = true;
+				Q.push(v);
+				dist[v] = dist[u] + 1;
+				Par[v] = u;
+			}
+		}
+	}
+
+	vector <int> Path;
+	if (dest != -1) {
+		if (used[dest]) {
+			int tmp = dest;
+			while (tmp != -1) {
+				Path.push_back(tmp);
+				tmp = Par[tmp];
+			}
+			reverse(Path.begin(), Path.end());
+			for (auto p : Path) cout << p << ' ';
+			cout << '\n';
+		}
+		else {
+			cout << "Not reachable\n";
+		}
+	}
+
+}

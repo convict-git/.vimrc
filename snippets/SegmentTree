@@ -1,0 +1,54 @@
+int A[N];
+long long st[4 * N], lz[4 * N];
+inline int mid (int s, int e) { return s + ((e - s) >> 1); }
+
+void create (int s, int e, int x) {
+	 lz[x] = 0;
+	 if (s == e) {
+		  st[x] = A[s];
+		  return;
+	 }
+
+	 create (s, mid (s, e), x + x + 1);
+	 create (mid (s, e) + 1, e, x + x + 2);
+	 st[x] = st[x + x + 1] + st[x + x + 2];
+}
+
+void lzupd (int s, int e, int x) {
+	 if (lz[x] != 0) {
+		  st[x] += lz[x] * (e - s + 1);
+		  if (s != e) {
+				lz[x + x + 1] += lz[x];
+				lz[x + x + 2] += lz[x];
+		  }
+		  lz[x] = 0;
+	 }
+}
+
+void upd (int s, int e, int qs, int qe, int x, int k) {
+	 lzupd (s, e, x);
+	 if (e < qs || s > qe) return;
+	 if (s >= qs && e <= qe) {
+		  st[x] += k * (e - s + 1);
+		  if (s != e) {
+				lz[x + x + 1] += k;
+				lz[x + x + 2] += k;
+		  }
+		  return;
+	 }
+
+	 upd (s, mid (s, e), qs, qe, x + x + 1, k);
+	 upd (mid (s, e) + 1, e, qs, qe, x + x + 2, k);
+	 st[x] = st[x + x + 1] + st[x + x + 2];
+}
+
+long long gets (int s, int e, int qs, int qe, int x) {
+		 lzupd (s, e, x);
+	 if (e < qs || s > qe) return 0;
+	 if (s >= qs && e <= qe) return st[x];
+
+	 long long lgets = gets (s, mid (s, e), qs, qe, x + x + 1);
+	 long long rgets = gets (mid (s, e) + 1, e, qs, qe, x + x + 2);
+	 return lgets + rgets;
+}
+

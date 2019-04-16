@@ -70,4 +70,4 @@ hi WarningMsg gui=NONE guifg=NONE guibg=#2b0808 ctermfg=red ctermbg=NONE
 hi WildMenu gui=NONE guifg=white guibg=#5e5e5e
 hi lCursor gui=NONE guifg=NONE guibg=NONE
 hi PreProc gui=NONE guifg=NONE guibg=NONE
-
+" #070766

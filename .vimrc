@@ -1,27 +1,26 @@
-"author: Priyanshu Shrivastav (mr.convict)
-"git clone https://github.com/convict-git/.vimrc/blob/master/.vimrc ~/.vimrc
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-"https://github.com/cstrap/monaco-font and http://www.gringod.com/wp-upload/software/Fonts/Monaco_Linux.ttf
-"set gfn=CMU\ Typewriter\ Text\ Bold\ 14
-"set gfn=Ubuntu\ Mono\ 13
+"https://github.com/cstrap/monaco-font and http://www.gringod.com/wp-upload/software/Fonts/Monaco_Linux.ttf "set gfn=CMU\ Typewriter\ Text\ Bold\ 14 "set gfn=Ubuntu\ Mono\ 13
 "set gfn=Monaco\ 10 "set gfn=Monospace\ 10
 "set gfn=Terminus\ Medium\ 14
 "set gfn=Fixed\ 11
+set nornu
+set nonu
 set gfn=Consolas\ 10.5
 set lines=40 columns=120
 set updatetime=100
-set nornu
-set nonu
 set history=500
 set autoindent
+set splitbelow
+set splitright
 set smartindent
 set noswapfile
-set tabstop=4
-set shiftwidth=4
+set tabstop=3
+set shiftwidth=3
 set expandtab
 set smarttab
 set autowrite
 set nowrap
+set ff=unix
 set autoread
 set wildmenu
 set showcmd
@@ -146,10 +145,10 @@ endfunction
 "Compilers
 "
 autocmd filetype cpp nnoremap <C-x> :!clear && clear && compile % 1
-autocmd filetype cpp nnoremap <C-c> :!clear && clear && ./a.out < input1
+autocmd filetype cpp nnoremap <C-c> :call TrialTest()<CR>
 autocmd filetype c nnoremap <C-c> :w <bar> e <bar> !clear && clear && gcc % -g -DCONVICTION -lm -o %:p:h/%:t:r.out && ./%:r.out && echo -e \"\\e[1m\" && /usr/bin/time --format=\"Memory Used  : \%M kb\nTime Elapsed : \%e sec\" ./%:r.out > out<CR>
 
-autocmd filetype javascript nnoremap <C-c> :! node %<CR>
+autocmd filetype javascript nnoremap <C-c> :!clear && node %
 autocmd filetype html nnoremap <C-c> :!google-chrome %<CR>
 autocmd filetype java nnoremap <C-c> :w <bar> !clear && clear && javac % && java -enableassertions %:t:r<CR>
 autocmd filetype python nnoremap <C-c> :!clear && clear && echo -e "Python3" && time python3 % < in
@@ -159,24 +158,30 @@ autocmd filetype go nnoremap <C-c> :w <bar> !go build % && ./%:p <CR>
 autocmd filetype sh nnoremap <C-c> :!xterm -e "chmod +x % && ./%;read"<CR>
 "
 "****************************************************************************
-"Key bindings
 "
-"space for ctrlp (file explorer)
 "<C-c> for compiling
+"space for ctrlp (file explorer)
 " Comments section
+"Key bindings
+autocmd filetype c,cpp vmap <S-c> :s/^/\/\/ /g<CR>
 autocmd filetype asm,py,sh vmap <S-c> :s/^/# /g<CR>
 autocmd filetype asm,py,sh vmap <S-x> :s/^# //g<CR>
-autocmd filetype c,cpp vmap <S-c> :s/^/\/\/ /g<CR>
 autocmd filetype c,cpp vmap <S-x> :s/^\/\/ //g<CR>
-
+nnoremap ,<Up>   :<C-u>silent! move-2<CR>==
+nnoremap ,<Down> :<C-u>silent! move+<CR>==
 nnoremap <C-j> :tabNext<CR>
 nnoremap <C-k> :tabnext<CR>
+nnoremap { 8k
+nnoremap } 8j
+nnoremap <C-e> 8<C-e>
+nnoremap <C-y> 8<C-y>
+
 "<C-n> for nerdtree (file tree)
 nnoremap <C-t> :tabnew <bar> Explore<CR>
 nnoremap <S-l> :exe "!!"<CR>
 "<C-x> for running
 nnoremap <F2> :normal "+gP<CR>"
-nnoremap <F3> :call VimDiff(
+nnoremap <C-q> :call VimDiff(
 autocmd filetype cpp nnoremap <S-F5> :!clear && clear && g++ -std=gnu++14 -Wall -Wextra -Wshadow -Wfloat-equal -Wconversion -Wshift-overflow=2 -Wduplicated-cond -O2 -DCONVICTION %
 autocmd filetype cpp nnoremap <F5> :!clear && clear && compile_only %
 nnoremap <S-F6> :ha > %:t:r <bar> !ps2pdf %:t:r && rm -rf %:t:r
@@ -188,7 +193,7 @@ nnoremap <F4> :SyntasticToggleMode<CR>
 nnoremap <C-g> :Explore %:p:h<CR>
 nnoremap <C-d> :call ShellMe()<CR>
 nnoremap <C-z> :cd %:p:h <bar> call Parse()<CR>
-autocmd filetype cpp nnoremap <C-a> :cd %:p:h <bar> call TestCase()<CR>
+nnoremap <C-a> :cd %:p:h <bar> call AddTestCase()<CR>
 nnoremap <S-F9> :silent exec '!gedit % &'
 nnoremap <F9> :YcmCompleter FixIt
 nnoremap <F10> :source ~/.vimrc
@@ -197,11 +202,12 @@ nnoremap <F12> :%y+<CR>
 autocmd filetype c,cpp nnoremap <F12> :call Mrconvict() <bar> !xterm -e "~/Dropbox/myfiles/cplib/warn.sh; read"<CR>
 autocmd filetype c,cpp nnoremap <S-F12> :call AssumeDead() <bar> !xterm -e "~/Dropbox/myfiles/cplib/warn.sh; read"<CR>
 nnoremap <S-CR> i<CR><Esc> " Needed for GVIm
-
 autocmd filetype c,cpp nnoremap <leader>ln :lnext<CR>
+
 nnoremap <leader>cc :call MyTimer(
 nnoremap <leader>del :exe '!delFirstLastLine'<CR>
 nnoremap <leader>cd :Explore ~/Dropbox/myfiles<CR>
+nnoremap <leader>hi :!hightail<CR>
 nnoremap <leader>sb :call Submit()
 nnoremap <leader>pr :call ReadProblem()<CR>
 nnoremap <leader>ad :let @+=expand("%:p") <bar> echo expand("%:p")<CR>
@@ -230,6 +236,8 @@ if has("autocmd")
 		autocmd BufNewFile *.c 0r ~/temp.c
 		autocmd BufNewFile *.html 0r ~/temp.html
 		autocmd BufWrite *.sql %y+
+      autocmd BufWinLeave *.cpp,*.c,.vimrc,*.py,*.java mkview
+      autocmd BufWinEnter *.cpp,*.c,.vimrc,*.py,*.java silent loadview
 	augroup END
 endif
 "****************************************************************************
@@ -278,7 +286,7 @@ autocmd BufWritePre * %s/\s\+$//e
 "sudo mv parse.py /usr/bin/parse
 "nnoremap <C-z> :cd %:p:h <bar> call Parse()<CR>
 "self check test cases
-"autocmd filetype cpp nnoremap <C-a> :cd %:p:h <bar> call TestCase()<CR>
+"autocmd filetype cpp nnoremap <C-a> :cd %:p:h <bar> call AddTestCase()<CR>
 "autocmd filetype cpp nnoremap <C-x> :cd %:p:h <bar> !xterm -e "./test.sh; read"<CR><CR>
 "
 
@@ -342,21 +350,20 @@ function! Submit()
 	write
 endfunction
 
-function! TestCase()
-	let index = 1
-	while !empty(glob("input".index))
-		let index += 1
-	endwhile
-	echo "Input case: " . index . " "
-	let in = input('Input case: ')
-	echo " "
-	let out = input('Output case: ')
-	echo " "
-	let confirm = input ('Are you sure of writing this test case (y/n) : ')
-	if confirm == 'y'
-		exec '!echo "' . in . '" > input' . index
-		exec '!echo "' . out . '" > output' . index
-	endif
+function! AddTestCase()
+   let filename = expand("%:t:r")
+   let fileNameRegExInput = matchstr(filename, 'input*')
+   let fileNameRegExOutput = matchstr(filename, 'output*')
+   if (!empty(fileNameRegExInput) || !empty(fileNameRegExOutput))
+      exec 'q | q'
+   else
+      let index = 1
+      while !empty(glob("input".index))
+         let index += 1
+      endwhile
+      exec '15sp output' . index . ' | aboveleft vsplit input' . index
+      "normal "+gP<CR>"
+   endif
 endfunction
 
 function! OpenHTML()
@@ -404,6 +411,17 @@ function! TermToggle(height)
         let s:term_win = win_getid())
     endif
 endfunction"
+
+function! TrialTest()
+   if empty(glob("input1"))
+      let fileVar = input ('Input file: ')
+      :exec '!clear && clear && echo -e "\033[42mCustom Input\033[0m\033[1m\n" && ./a.out' . fileVar
+      :exec '!echo -e "\033[0m"'
+   else
+      let idx = input ('Test Case: ')
+      :exec '!clear && clear && ./a.out < input' . idx
+   endif
+endfunction
 
 
 ""not my functions

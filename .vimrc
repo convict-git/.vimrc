@@ -1,14 +1,12 @@
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "https://github.com/cstrap/monaco-font and http://www.gringod.com/wp-upload/software/Fonts/Monaco_Linux.ttf "set gfn=CMU\ Typewriter\ Text\ Bold\ 14 "set gfn=Ubuntu\ Mono\ 13
-"set gfn=Monaco\ 10 "set gfn=Monospace\ 10
-"set gfn=Terminus\ Medium\ 14
-"set gfn=Fixed\ 11
+"set gfn=Monaco\ 10 "set gfn=Monospace\ 10 "set gfn=Terminus\ Medium\ 14
+"set gfn=Fixed\ 11 set nornu
 set bs=2
-set nornu
 set nonu
 set gfn=Consolas\ 10.5
 " set lines=40 columns=120
-set updatetime=100
+" set updatetime=100
 set history=500
 set autoindent
 set splitbelow
@@ -24,7 +22,6 @@ set nowrap
 set ff=unix
 set autoread
 set wildmenu
-set wildignore=*.out,*.exe
 set showcmd
 set smartcase
 set nohlsearch
@@ -36,7 +33,8 @@ set noerrorbells
 set foldmethod=manual
 set mouse=a
 set belloff=all
-set background=dark
+set background=light
+set previewheight=25
 syntax enable
 set statusline=%<%f%h%m%r%=char=%b=0x%B\ \ %l,%c%V\ %P
 "set statusline=\PATH:\ %r%F\ \ \ \ \LINE:\ %l/%L/%P\ TIME:\ %{strftime('%c')}
@@ -44,36 +42,36 @@ set t_Co=256
 set gcr=n-v-c:hor30-Cursor/lCursor,ve:ver35-Cursor,o:hor50-Cursor,i-ci:hor10-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait0-blinkoff150-blinkon175
 set guicursor+=a:blinkon0
 set printoptions=paper:A4
-set colorcolumn=0
+" set colorcolumn=80
 set completeopt-=preview
 
 ""for light schemes
-" autocmd BufRead,BufNewFile,BufEnter * syn match parens /[(){}]/ | hi parens guifg=white ctermfg=black cterm=bold gui=bold
+autocmd BufRead,BufNewFile,BufEnter * syn match parens /[\[\](){}]/ | hi parens guifg=black ctermfg=black cterm=bold gui=bold | lcd %:p:h
 "for dark schemes
-autocmd BufRead,BufNewFile,BufEnter * syn match parens /[(){}]/ | hi parens guifg=white ctermfg=white cterm=bold gui=bold
+" autocmd BufRead,BufNewFile,BufEnter * syn match parens /[(){}]/ | hi parens guifg=white ctermfg=white cterm=bold gui=bold
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
 filetype plugin indent on    " required
 " colorscheme farNoBoldTMUX
-colorscheme farNoBold " without tmux use this -- Comments reversed
+" colorscheme farNoBold " without tmux use this -- Comments reversed
 
 "****************************************************************************
 "PLUGINS
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+" Plugin 'tpope/vim-fugitive'
 Plugin 'NLKNguyen/papercolor-theme'
 " Plugin 'enricobacis/vim-airline-clock'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'kien/ctrlp.vim'
 "Plugin 'scrooloose/nerdtree'
 Plugin 'octol/vim-cpp-enhanced-highlight'
-
 Plugin 'vim-airline/vim-airline'
 "Plugin 'alvan/vim-closetag'
 Plugin 'Valloric/YouCompleteMe'
-" Plugin 'ap/vim-css-color'
-"Plugin 'jiangmiao/auto-pairs'
+Plugin 'ap/vim-css-color'
+Plugin 'jiangmiao/auto-pairs'
 " Plugin 'lambdalisue/vim-fullscreen'
 "Plugin 'lpenz/vimcommander'
 " Plugin 'cocopon/iceberg.vim'
@@ -85,8 +83,9 @@ Plugin 'terryma/vim-multiple-cursors'
 
 call vundle#end()
 
-" colorscheme PaperColor
-let g:netrw_list_hide= '.*\.swp$,.*\.out'
+" colorscheme farNoBold
+colorscheme zellner
+set background=light
 
 let g:cpp_concepts_highlight = 1
 let g:cpp_experimental_template_highlight = 1
@@ -100,7 +99,6 @@ let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 let g:tagbar_width=40
 nnoremap <leader>tag :TagbarToggle<CR>
-nnoremap <leader>rc :tabnew ~/Dropbox/myfiles/sport_coding/cplib/.vimrc<CR>
 
 "nnoremap <C-g> :NERDTreeFocus<CR>
 nnoremap <space> :CtrlPCurFile<CR>
@@ -108,14 +106,6 @@ let g:ctrlp_map = '<C-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_custom_ignore = '.viminfo\|*.exe\|*.out'
-
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
-let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
-let g:closetag_filetypes = 'html,xhtml,phtml'
-let g:closetag_xhtml_filetypes = 'xhtml,jsx'
-let g:closetag_emptyTags_caseSensitive = 1
-let g:closetag_shortcut = '>'
-let g:closetag_close_shortcut = '<leader>>'
 let g:YcmForceCompileAndDiagnostics = 0
 let g:ycm_always_populate_location_list = 1
 "let g:ycm_error_symbol = '>>'
@@ -123,15 +113,13 @@ let g:ycm_always_populate_location_list = 1
 let g:ycm_enable_diagnostic_signs = 0
 let g:syntastic_java_checkers = []
 
-let g:airline#extensions#clock#format = '%H:%M:%S'
-let g:airline#extensions#clock#updatetime = 1000
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline_theme='papercolor'
 
-let g:airline#extensions#clock#auto = 1
+let g:airline_theme='badcat'
+
 function! AirlineInit()
    let g:airline_section_z = airline#section#create(['clock', g:airline_symbols.space, g:airline_section_z])
 endfunction
@@ -139,16 +127,6 @@ autocmd User AirlineAfterInit call AirlineInit()
 
 " setlocal statusline=%{countdown#get()} | call countdown#set(4500)
 "
-function! AirlineInitTimer()
-   call airline#parts#define_raw('timer', '%{countdown#get()}')
-   let g:airline_section_y = airline#section#create(['timer', g:airline_symbols.space, g:airline_section_y])
-endfunction
-
-function! MyTimer(s)
-   call countdown#set(a:s)
-   call AirlineInitTimer()
-endfunction
-
 "****************************************************************************
 "codeforces vim
 "
@@ -158,10 +136,12 @@ endfunction
 "autocmd FileType cpp set keywordprg=cppman
 "****************************************************************************
 "Compilers
+" autocmd BufEnter * silent! lcd %:p:h
 "
-autocmd filetype cpp nnoremap <C-x> :lcd %:p:h <bar> !clear && clear && tester % 1
+" autocmd filetype cpp nnoremap <C-x> :lcd %:p:h <bar> !clear && clear && tester % 1
+autocmd filetype cpp nnoremap <C-x> :lcd %:p:h <bar> !clear && clear && tester_new % 3 C
 autocmd filetype sml nnoremap <C-x> :!clear && clear && sml %
-autocmd filetype cpp nnoremap <C-c> :lcd %:p:h <bar> call TrialTest()<CR>
+autocmd filetype cpp nnoremap <C-c> :lcd %:p:h <bar> !clear && clear && time ./a.out
 autocmd filetype c nnoremap <C-c> :!clear && clear && gcc -ggdb -DCONVICTION -lm % && ./a.out
 autocmd filetype javascript nnoremap <C-c> :!clear && node %
 autocmd filetype html nnoremap <C-c> :!google-chrome %<CR>
@@ -170,7 +150,7 @@ autocmd filetype python nnoremap <C-c> :!clear && clear && echo -e "Python3" && 
 autocmd filetype python nnoremap <C-x> :!clear && clear && echo -e "Python" && time python % < in
 autocmd filetype perl nnoremap <C-c> :w <bar> !perl % <CR>
 autocmd filetype go nnoremap <C-c> :w <bar> !go build % && ./%:p <CR>
-autocmd filetype sh nnoremap <C-c> :!xterm -e "chmod +x % && ./%;read"<CR>
+autocmd filetype sh nnoremap <C-c> :!clear && clear && sudo chmod +x % && ./%<CR>
 "
 "****************************************************************************
 "
@@ -207,27 +187,26 @@ autocmd filetype c,cpp nnoremap ; :read ~/Dropbox/myfiles/sport_coding/cplib/sni
 "autocmd filetype cpp nnoremap <C-x> :cd %:p:h <bar> call RunTest()<CR>
 nnoremap <F4> :SyntasticToggleMode<CR>
 nnoremap <C-g> :Explore %:p:h<CR>
-nnoremap <C-d> :call ShellMe()<CR>
+nnoremap <leader>t :call ShowTestCase()<CR>
+nnoremap <C-d> :lcd %:p:h <bar> shell<CR>
 nnoremap <C-z> :cd %:p:h <bar> exec '!clear && clear && parse'<CR>
 nnoremap <C-a> :cd %:p:h <bar> call AddTestCase()<CR>
-nnoremap <C-q> :cd %:p:h <bar> call ShowTestCase()<CR>
 nnoremap <S-F9> :silent exec '!gedit % &'
-nnoremap <F9> :YcmCompleter FixIt
+nnoremap <F8> :call ReDraw()<CR>
 nnoremap <F10> :source ~/.vimrc
 "<F11> for toggling toolbar and menubar
 nnoremap <F12> :%y+<CR>
-autocmd filetype c,cpp nnoremap <F12> :call Mrconvict() <bar> !xterm -e "~/Dropbox/myfiles/sport_coding/cplib/warn.sh; read"<CR>
-autocmd filetype c,cpp nnoremap <S-F12> :call AssumeDead() <bar> !xterm -e "~/Dropbox/myfiles/sport_coding/cplib/warn.sh; read"<CR>
+autocmd filetype c,cpp nnoremap <F12> :call Mrconvict()<CR>
+autocmd filetype c,cpp nnoremap <S-F12> :call MrconvictAddress()<CR>
 nnoremap <S-CR> i<CR><Esc> " Needed for GVIm
 autocmd filetype c,cpp nnoremap <leader>ln :lnext<CR>
 
 " nnoremap <leader>cc :call MyTimer(
-nnoremap <leader>cc :terminal run_timer
-nnoremap <leader>del :exe '!delFirstLastLine'<CR>
+autocmd filetype cpp nnoremap <leader>rn :random_run %<CR>
 nnoremap <leader>cd :Explore ~/Dropbox/myfiles<CR>
 nnoremap <leader>hi :!hightail<CR>
+nnoremap <leader>cm :%Tabularize /\/\/<CR>
 nnoremap <leader>sb :call Submit()
-nnoremap <leader>pr :call ReadProblem()<CR>
 nnoremap <leader>ad :let @+=expand("%:p") <bar> echo expand("%:p")<CR>
 nnoremap <leader>my :silent exec 'terminal w3m https://codeforces.com/submissions/mr.convict'<CR>
 
@@ -239,14 +218,10 @@ if has("autocmd")
       "autocmd BufEnter *.cpp,*.c,*.cc colorscheme far
       "autocmd BufEnter *.js,*.php,*.html,*.py,in colorscheme jellybeans
       "autocmd BufEnter *.sql,*.md colorscheme peachpuff
-      autocmd BufEnter *.asm colorscheme jellybeans
       autocmd BufEnter * silent! lcd %:p:h
       autocmd BufEnter .vimrc,*.vim,*.cpp,*.c,*.java,*.py :TagbarOpen
-      " autocmd BufWrite * exec 'call MyTagbarRefresh()'
       autocmd BufEnter *.exe,*.out !xterm -e "./%; read"
       autocmd BufEnter *.jar !xterm -e "java -jar %; read"
-      autocmd BufEnter *.pdf exec 'call OpenPdf()'
-      autocmd BufEnter *.html exec 'call OpenHTML()'
       autocmd BufNewFile *.cpp 0r ~/Dropbox/myfiles/sport_coding/cplib/temp.cpp
       " autocmd BufEnter *.cpp :exec '3,19 fold'
       autocmd BufNewFile *.asm 0r ~/Dropbox/myfiles/mips/temp.asm
@@ -267,19 +242,16 @@ autocmd BufReadPost *
          \   exe "normal! g`\"" |
          \ endif
 "****************************************************************************
-"My tab completion
-function! My_Tab_Completion()
-   if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-      return "\<C-P>"
-   else
-      return "\<Tab>"
-   endif
+function! ReDraw()
+   exec 'autocmd BufRead,BufNewFile,BufEnter * syn match parens /[\[\](){}]/ | hi parens guifg=white ctermfg=white cterm=bold gui=bold'
+   colorscheme PaperColor
+   set background=dark
+   lcd %:p:h
+   exec 'e'
 endfunction
-inoremap <Tab> <C-R>=My_Tab_Completion()<CR>
-
-
 "/****************************************************************************/
 "Menu and Toolbar toggle
+"
 function! ToggleGUICruft()
    if &guioptions=='i'
       exec('set guioptions=imTrL')
@@ -311,37 +283,22 @@ autocmd BufWritePre * %s/\s\+$//e
 
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%81v.\+/
-function! ShellMe()
-   " exec '!clear && clear'
-   exec 'lcd %:p:h'
-   exec 'shell'
-endfunction
-
 function! Mrconvict()
+   exec '!clear && clear && yank_to_submit % 3'
+   silent exec '0r ~/Dropbox/myfiles/sport_coding/cplib/mrconvict.cpp'
+   silent exec '%y+'
+   silent exec '1,8d'
+endfunction
+
+function! MrconvictAddress()
    exec '0r ~/Dropbox/myfiles/sport_coding/cplib/mrconvict.cpp'
-   exec '%y+'
-   exec '1,8d'
+   exec 'w'
+   exec '!clear && clear && yank_to_submit % 3'
+   let @+=expand("%:p")
+   echo expand("%:p")
+   let pasted = input('Submitted?')
+   silent exec '1,8d | w'
 endfunction
-
-
-function! AssumeDead()
-   exec '0r ~/Dropbox/myfiles/sport_coding/cplib/assumedead.cpp'
-   exec '%y+'
-   exec '1,7d'
-endfunction
-
-function! RunTest()
-   if (!empty (glob ("test.sh")))
-      exec '!xterm -e "./test.sh; read"'
-   else
-      exec '!xterm -e "runTestCases; read"'
-   endif
-endfunction
-
-function! Parse()
-   let new_contest = input('Enter codeforces contest code (eg. 1009 --p A for problem A of 1009): ')
-   exec '!clear && clear && parse ' . l:new_contest. ''
-endfunction"
 
 "silent exec '!gnome-terminal --tab -- w3m https://codeforces.com/problemset/submit/' . l:submit_contest. ' '
 function! VimDiff(i)
@@ -365,7 +322,7 @@ function! Submit()
    exec '0r ~/Dropbox/myfiles/sport_coding/cplib/mrconvict.cpp'
    write
    exec '!clear && clear && cfsubmit %'
-   exec '1,7d'
+   exec '1,8d'
    write
 endfunction
 
@@ -451,18 +408,17 @@ function! ShowTestCase()
       endif
    endif
 endfunction
-
 function! TrialTest()
    let file = input ('Input file : ')
    exec '!xterm -e "time ./a.out ' . file '; read"'
-"  if empty(glob("input1"))
-"     let fileVar = input ('Input file: ')
-"     :silent exec '!clear && clear && echo -e "\033[42mCustom Input\033[0m\033[1m\n" && ./a.out' . fileVar
-"     :exec '!echo -e "\033[0m"'
-"  else
-"     let idx = input ('Input file : ')
-"     :exec '!xterm -e "time ./a.out ' . idx '; read"'
-"  endif
+   "  if empty(glob("input1"))
+   "     let fileVar = input ('Input file: ')
+   "     :exec '!clear && clear && echo -e "\033[42mCustom Input\033[0m\033[1m\n" && ./a.out' . fileVar
+   "     :exec '!echo -e "\033[0m"'
+   "  else
+   "     let idx = input ('Test Case: ')
+   "     :exec '!clear && clear && ./a.out < input' . idx
+   "  endif
 endfunction
 
 
@@ -488,6 +444,7 @@ function! MyTagbarRefresh()
 endfunction
 
 autocmd vimenter * if !argc() | Explore ~/Dropbox/myfiles/sport_coding | endif
+" autocmd vimenter * if !argc() | Explore | endif
 
 "trial functions
 let s:term_buf = 0
@@ -535,4 +492,14 @@ endfunction
 
 nmap <silent> <leader>mw :call MarkWindowSwap()<CR>
 nmap <silent> <leader>pw :call DoWindowSwap()<CR>
+
+
+function! My_Tab_Completion()
+   if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+      return "\<C-P>"
+   else
+      return "\<Tab>"
+   endif
+endfunction
+inoremap <Tab> <C-R>=My_Tab_Completion()<CR>
 

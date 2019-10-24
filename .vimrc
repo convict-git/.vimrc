@@ -6,7 +6,7 @@ set bs=2
 set nonu
 set gfn=Consolas\ 10.5
 " set lines=40 columns=120
-" set updatetime=100
+set updatetime=100
 set history=500
 set autoindent
 set splitbelow
@@ -30,7 +30,7 @@ set incsearch
 set encoding=utf-8
 set matchpairs=(:),{:},[:],<:>,':',":"
 set noerrorbells
-set foldmethod=manual
+set foldmethod=marker
 set mouse=a
 set belloff=all
 set background=light
@@ -48,7 +48,7 @@ set completeopt-=preview
 ""for light schemes
 autocmd BufRead,BufNewFile,BufEnter * syn match parens /[\[\](){}]/ | hi parens guifg=black ctermfg=black cterm=bold gui=bold | lcd %:p:h
 "for dark schemes
-" autocmd BufRead,BufNewFile,BufEnter * syn match parens /[(){}]/ | hi parens guifg=white ctermfg=white cterm=bold gui=bold
+" autocmd BufRead,BufNewFile,BufEnter * syn match parens /[\[\](){}]/ | hi parens guifg=white ctermfg=white cterm=bold gui=bold
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -61,11 +61,13 @@ filetype plugin indent on    " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " Plugin 'tpope/vim-fugitive'
+Plugin 'junegunn/vim-easy-align'
 Plugin 'NLKNguyen/papercolor-theme'
 " Plugin 'enricobacis/vim-airline-clock'
+Plugin 'chrisbra/Colorizer'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'kien/ctrlp.vim'
-"Plugin 'scrooloose/nerdtree'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'vim-airline/vim-airline'
 "Plugin 'alvan/vim-closetag'
@@ -83,10 +85,14 @@ Plugin 'terryma/vim-multiple-cursors'
 
 call vundle#end()
 
-" colorscheme farNoBold
 colorscheme zellner
 set background=light
-
+" colorscheme farNoBold set background=dark "/both work together
+"
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 let g:cpp_concepts_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 let g:cpp_class_decl_highlight = 1
@@ -119,7 +125,7 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#enabled = 1
 
 let g:airline_theme='badcat'
-
+map <S-m> :NERDTreeToggle<CR>
 function! AirlineInit()
    let g:airline_section_z = airline#section#create(['clock', g:airline_symbols.space, g:airline_section_z])
 endfunction
@@ -139,15 +145,15 @@ autocmd User AirlineAfterInit call AirlineInit()
 " autocmd BufEnter * silent! lcd %:p:h
 "
 " autocmd filetype cpp nnoremap <C-x> :lcd %:p:h <bar> !clear && clear && tester % 1
-autocmd filetype cpp nnoremap <C-x> :lcd %:p:h <bar> !clear && clear && tester_new % 3 C
-autocmd filetype sml nnoremap <C-x> :!clear && clear && sml %
+autocmd filetype cpp,java,python nnoremap <C-x> :lcd %:p:h <bar> !clear && clear && tester_all % 3 C
 autocmd filetype cpp nnoremap <C-c> :lcd %:p:h <bar> !clear && clear && time ./a.out
-autocmd filetype c nnoremap <C-c> :!clear && clear && gcc -ggdb -DCONVICTION -lm % && ./a.out
+autocmd filetype java nnoremap <C-c> :lcd %:p:h <bar> !clear && clear && time java -enableassertions %:t:r
+autocmd filetype python nnoremap <C-c> :lcd %:p:h <bar> !clear && clear && echo -e "Python3" && time python3 %
+autocmd filetype sml nnoremap <C-x> :!clear && clear && sml %
+autocmd filetype c nnoremap <C-c> :lcd %:p:h && !clear && clear && gcc -ggdb -DCONVICTION -lm % && ./a.out
 autocmd filetype javascript nnoremap <C-c> :!clear && node %
 autocmd filetype html nnoremap <C-c> :!google-chrome %<CR>
-autocmd filetype java nnoremap <C-c> :w <bar> !clear && clear && javac % && java -enableassertions %:t:r<CR>
-autocmd filetype python nnoremap <C-c> :!clear && clear && echo -e "Python3" && time python3 % < in
-autocmd filetype python nnoremap <C-x> :!clear && clear && echo -e "Python" && time python % < in
+" autocmd filetype java nnoremap <C-c> :w <bar> !clear && clear && javac % && time java -enableassertions %:t:r < in
 autocmd filetype perl nnoremap <C-c> :w <bar> !perl % <CR>
 autocmd filetype go nnoremap <C-c> :w <bar> !go build % && ./%:p <CR>
 autocmd filetype sh nnoremap <C-c> :!clear && clear && sudo chmod +x % && ./%<CR>
@@ -162,6 +168,7 @@ autocmd filetype c,cpp vmap <S-c> :s/^/\/\/ /g<CR>
 autocmd filetype asm,py,sh vmap <S-c> :s/^/# /g<CR>
 autocmd filetype asm,py,sh vmap <S-x> :s/^# //g<CR>
 autocmd filetype c,cpp vmap <S-x> :s/^\/\/ //g<CR>
+
 nnoremap ,<Up>   :<C-u>silent! move-2<CR>==
 nnoremap ,<Down> :<C-u>silent! move+<CR>==
 nnoremap <C-j> :tabNext<CR>
@@ -195,9 +202,9 @@ nnoremap <S-F9> :silent exec '!gedit % &'
 nnoremap <F8> :call ReDraw()<CR>
 nnoremap <F10> :source ~/.vimrc
 "<F11> for toggling toolbar and menubar
-nnoremap <F12> :%y+<CR>
 autocmd filetype c,cpp nnoremap <F12> :call Mrconvict()<CR>
 autocmd filetype c,cpp nnoremap <S-F12> :call MrconvictAddress()<CR>
+nnoremap <F12> :%y+<CR>
 nnoremap <S-CR> i<CR><Esc> " Needed for GVIm
 autocmd filetype c,cpp nnoremap <leader>ln :lnext<CR>
 
@@ -220,17 +227,19 @@ if has("autocmd")
       "autocmd BufEnter *.sql,*.md colorscheme peachpuff
       autocmd BufEnter * silent! lcd %:p:h
       autocmd BufEnter .vimrc,*.vim,*.cpp,*.c,*.java,*.py :TagbarOpen
+      " autocmd BufEnter .vimrc,*.vim,*.cpp,*.c,*.java,*.py call MyTagbarRefresh()
       autocmd BufEnter *.exe,*.out !xterm -e "./%; read"
       autocmd BufEnter *.jar !xterm -e "java -jar %; read"
       autocmd BufNewFile *.cpp 0r ~/Dropbox/myfiles/sport_coding/cplib/temp.cpp
+      autocmd BufNewFile *.java 0r ~/Dropbox/myfiles/sport_coding/cplib/temp.java
       " autocmd BufEnter *.cpp :exec '3,19 fold'
       autocmd BufNewFile *.asm 0r ~/Dropbox/myfiles/mips/temp.asm
       autocmd BufNewFile *.cc 0r ~/temp.cc
       autocmd BufNewFile *.c 0r ~/temp.c
       autocmd BufNewFile *.html 0r ~/temp.html
       autocmd BufWrite *.sql %y+
-      autocmd BufWinLeave *.cpp,*.c,.vimrc,*.py,*.java mkview
-      autocmd BufWinEnter *.cpp,*.c,.vimrc,*.py,*.java silent loadview
+      " autocmd BufWinLeave *.cpp,*.c,.vimrc,*.py,*.java mkview
+      " autocmd BufWinEnter *.cpp,*.c,.vimrc,*.py,*.java silent loadview
    augroup END
 endif
 
@@ -284,10 +293,11 @@ autocmd BufWritePre * %s/\s\+$//e
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%81v.\+/
 function! Mrconvict()
-   exec '!clear && clear && yank_to_submit % 3'
    silent exec '0r ~/Dropbox/myfiles/sport_coding/cplib/mrconvict.cpp'
-   silent exec '%y+'
-   silent exec '1,8d'
+   exec '%y+'
+   exec 'w'
+   exec '!clear && clear && yank_to_submit % 3'
+   silent exec '1,8d | w'
 endfunction
 
 function! MrconvictAddress()
@@ -502,4 +512,5 @@ function! My_Tab_Completion()
    endif
 endfunction
 inoremap <Tab> <C-R>=My_Tab_Completion()<CR>
+
 
